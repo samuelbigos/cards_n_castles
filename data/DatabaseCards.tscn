@@ -1,0 +1,52 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://data/DatabaseCards.gd" type="Script" id=1]
+[ext_resource path="res://data/Card.tscn" type="PackedScene" id=3]
+[ext_resource path="res://assets/units/maa.png" type="Texture" id=4]
+[ext_resource path="res://assets/units/ram.png" type="Texture" id=5]
+[ext_resource path="res://assets/units/mangonel.png" type="Texture" id=6]
+[ext_resource path="res://assets/units/stonewall.png" type="Texture" id=7]
+[ext_resource path="res://assets/units/archer.png" type="Texture" id=8]
+[ext_resource path="res://assets/units/cavalry.png" type="Texture" id=9]
+[ext_resource path="res://assets/units/skirmisher.png" type="Texture" id=10]
+[ext_resource path="res://assets/units/spearman.png" type="Texture" id=11]
+[ext_resource path="res://assets/units/palisade.png" type="Texture" id=12]
+
+[node name="DatabaseCards" type="Node"]
+script = ExtResource( 1 )
+
+[node name="Archer" parent="." instance=ExtResource( 3 )]
+id = "archer"
+sprite = ExtResource( 8 )
+
+[node name="Cavalry" parent="." instance=ExtResource( 3 )]
+id = "cavalry"
+sprite = ExtResource( 9 )
+
+[node name="Maa" parent="." instance=ExtResource( 3 )]
+id = "maa"
+sprite = ExtResource( 4 )
+
+[node name="Mangonel" parent="." instance=ExtResource( 3 )]
+id = "mangonel"
+sprite = ExtResource( 6 )
+
+[node name="Palisade" parent="." instance=ExtResource( 3 )]
+id = "palisade"
+sprite = ExtResource( 12 )
+
+[node name="Ram" parent="." instance=ExtResource( 3 )]
+id = "ram"
+sprite = ExtResource( 5 )
+
+[node name="Skirmisher" parent="." instance=ExtResource( 3 )]
+id = "skirmisher"
+sprite = ExtResource( 10 )
+
+[node name="Spearman" parent="." instance=ExtResource( 3 )]
+id = "spearman"
+sprite = ExtResource( 11 )
+
+[node name="Stonewall" parent="." instance=ExtResource( 3 )]
+id = "stonewall"
+sprite = ExtResource( 7 )

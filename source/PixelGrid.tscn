@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://source/PixelGrid.gd" type="Script" id=1]
+
+[node name="PixelGrid" type="Node2D"]
+script = ExtResource( 1 )
+grid_size = Vector2( 16, 16 )
+cell_size = Vector2( 16, 16 )
+cell_padding = 3
