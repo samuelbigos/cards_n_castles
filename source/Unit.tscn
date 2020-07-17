@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://assets/units/archer.png" type="Texture" id=1]
+[ext_resource path="res://source/Unit.gd" type="Script" id=2]
+
+
+[node name="Unit" type="Node2D"]
+position = Vector2( 133.099, 143.338 )
+script = ExtResource( 2 )
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 15.2394, 12.449 )
+texture = ExtResource( 1 )

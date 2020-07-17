@@ -1,0 +1,45 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=4
+
+_global_script_classes=[ {
+"base": "Node2D",
+"class": "Game",
+"language": "GDScript",
+"path": "res://source/Game.gd"
+}, {
+"base": "Node2D",
+"class": "Unit",
+"language": "GDScript",
+"path": "res://source/Unit.gd"
+} ]
+_global_script_class_icons={
+"Game": "",
+"Unit": ""
+}
+
+[application]
+
+config/name="Cards vs Castles"
+run/main_scene="res://source/Game.tscn"
+config/icon="res://icon.png"
+
+[display]
+
+window/size/width=480
+window/size/height=270
+window/size/test_width=1440
+window/size/test_height=810
+window/stretch/mode="viewport"
+window/stretch/aspect="keep"
+
+[rendering]
+
+environment/default_clear_color=Color( 0.827451, 0.815686, 0.796078, 1 )
+environment/default_environment="res://default_env.tres"
