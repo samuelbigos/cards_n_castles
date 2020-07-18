@@ -12,13 +12,14 @@ Base for a unit on the battlefield.
 
 """ PUBLIC """
 
-const SNAP_TIME = 0.15
+const SNAP_TIME = 0.1
 
 var _sticky = false
-var _mouse_snapped_pos_last = Vector2()
+var _mouse_grid_pos_last = Vector2()
 var _snap_lerp_timer = 0.0
 var _snap_lerp_to = Vector2()
 var _snap_lerp_from = Vector2()
+var _process_input = false
 
 ###########
 # METHODS #
@@ -43,27 +44,27 @@ func _process(delta):
 			
 func _move_and_snap(pos):
 	# adjust pos to snap to grid
-	var mouse_snapped_pos = _pos_to_snapped_pos(pos)
-	if mouse_snapped_pos != _mouse_snapped_pos_last:
-		_snap_lerp_from = _mouse_snapped_pos_last
-		_snap_lerp_to = mouse_snapped_pos
+	var mouse_grid_pos = _pos_to_grid_pos(pos)
+	if mouse_grid_pos != _mouse_grid_pos_last and Grid.get_at(mouse_grid_pos.x, mouse_grid_pos.y) == null:
+		_snap_lerp_from = _grid_pos_to_snapped_pos(_mouse_grid_pos_last)
+		_snap_lerp_to = _grid_pos_to_snapped_pos(mouse_grid_pos)
 		_snap_lerp_timer = SNAP_TIME
+		Grid.move(self, mouse_grid_pos.x, mouse_grid_pos.y)
 		
-	_mouse_snapped_pos_last = mouse_snapped_pos
+	_mouse_grid_pos_last = mouse_grid_pos
 		
 
-func _pos_to_snapped_pos(pos):
-	var snapped_pos = Vector2()
-	snapped_pos.x = int(pos.x / (PixelGrid.cell_size.x + PixelGrid.cell_padding))
-	snapped_pos.y = int(pos.y / (PixelGrid.cell_size.y + PixelGrid.cell_padding))
-	return _grid_pos_to_snapped_pos(snapped_pos)
+func _pos_to_snapped_pos(pos:Vector2):
+	return _grid_pos_to_snapped_pos(_pos_to_grid_pos(pos))
 	
 	
-func _grid_pos_to_snapped_pos(pos):
-	var snapped_pos = Vector2()
-	snapped_pos = pos * (PixelGrid.cell_size + ((Vector2(1.0, 1.0) * PixelGrid.cell_padding)))
-	snapped_pos += PixelGrid.cell_size * 0.5
-	return snapped_pos
+func _grid_pos_to_snapped_pos(pos:Vector2):
+	return pos * (Grid.cell_size + ((Vector2(1.0, 1.0) * Grid.cell_padding))) + Grid.cell_size * 0.5
+	
+	
+func _pos_to_grid_pos(pos:Vector2):
+	return Vector2(int(pos.x / (Grid.cell_size.x + Grid.cell_padding)),
+					int(pos.y / (Grid.cell_size.y + Grid.cell_padding)))
 	
 
 func _in_hand():
@@ -77,23 +78,31 @@ func _lerp(from, to, time):
 	
 
 func _on_Area2D_mouse_entered():
-	$Selection.visible = true
+	if _process_input:
+		$Selection.visible = true
 
 
 func _on_Area2D_mouse_exited():
-	$Selection.visible = false
+	if _process_input:
+		$Selection.visible = false
 
 
-func _on_Area2D_input_event(viewport, event, shape_idx):
-	if Input.is_action_pressed("ui_select"):
-		_sticky = true
+func _on_Area2D_input_event(_viewport, event, _shape_idx):
+	if _process_input: # TODO: Move this input logic to Player.gd
+		if event.is_action_pressed("ui_select"):
+			_sticky = true
 
 """ PUBLIC """
 
 func init_with_data(card_data):
 	$Sprite.texture = card_data.sprite
+	$SpriteBG.texture = card_data.sprite_bg
 	
 	
 func set_grid_pos(pos):
 	position = _grid_pos_to_snapped_pos(pos)
-	_mouse_snapped_pos_last = position
+	_mouse_grid_pos_last = pos
+	if not Grid.has(self):
+		Grid.add(pos.x, pos.y, self)
+	else:
+		Grid.move(self, pos.x, pos.y)
