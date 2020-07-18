@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://source/actions/ActionAttack.gd" type="Script" id=1]
+
+[node name="ActionAttack" type="Node"]
+script = ExtResource( 1 )

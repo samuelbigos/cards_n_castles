@@ -20,14 +20,17 @@ script = ExtResource( 1 )
 id = "archer"
 sprite = ExtResource( 8 )
 sprite_bg = ExtResource( 2 )
+initiative = 2
 
 [node name="Cavalry" parent="." instance=ExtResource( 3 )]
 id = "cavalry"
 sprite = ExtResource( 9 )
+initiative = 5
 
 [node name="Maa" parent="." instance=ExtResource( 3 )]
 id = "maa"
 sprite = ExtResource( 4 )
+initiative = 3
 
 [node name="Mangonel" parent="." instance=ExtResource( 3 )]
 id = "mangonel"
@@ -36,6 +39,7 @@ sprite = ExtResource( 6 )
 [node name="Palisade" parent="." instance=ExtResource( 3 )]
 id = "palisade"
 sprite = ExtResource( 12 )
+can_move = false
 
 [node name="Ram" parent="." instance=ExtResource( 3 )]
 id = "ram"
@@ -44,11 +48,14 @@ sprite = ExtResource( 5 )
 [node name="Skirmisher" parent="." instance=ExtResource( 3 )]
 id = "skirmisher"
 sprite = ExtResource( 10 )
+initiative = 2
 
 [node name="Spearman" parent="." instance=ExtResource( 3 )]
 id = "spearman"
 sprite = ExtResource( 11 )
+initiative = 3
 
 [node name="Stonewall" parent="." instance=ExtResource( 3 )]
 id = "stonewall"
 sprite = ExtResource( 7 )
+can_move = false

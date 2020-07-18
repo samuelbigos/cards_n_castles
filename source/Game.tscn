@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://source/Unit.tscn" type="PackedScene" id=1]
 [ext_resource path="res://source/Game.gd" type="Script" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://source/Player.gd" type="Script" id=4]
 [ext_resource path="res://data/DatabaseCards.tscn" type="PackedScene" id=5]
 [ext_resource path="res://source/Opponent.gd" type="Script" id=6]
+[ext_resource path="res://source/BattleAutomator.gd" type="Script" id=7]
 
 [node name="Game" type="Node2D"]
 script = ExtResource( 2 )
@@ -20,7 +21,22 @@ starting_hand = [ "archer", "maa", "archer", "maa", "cavalry" ]
 [node name="Opponent" type="Node2D" parent="."]
 script = ExtResource( 6 )
 
+[node name="BattleAutomator" type="Node2D" parent="."]
+script = ExtResource( 7 )
+
 [node name="DatabaseCards" parent="." instance=ExtResource( 5 )]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ToBattle" type="Button" parent="CanvasLayer"]
+margin_right = 12.0
+margin_bottom = 20.0
+text = "To Battle!"
+__meta__ = {
+"_edit_use_anchors_": false
+}
 [connection signal="state_change" from="." to="Player" method="_on_Game_state_change"]
-[connection signal="state_change" from="." to="Opponent" method="_on_Game_state_change"]
 [connection signal="state_change" from="." to="." method="_on_Game_state_change"]
+[connection signal="state_change" from="." to="Opponent" method="_on_Game_state_change"]
+[connection signal="on_battle_end" from="BattleAutomator" to="." method="_on_BattleAutomator_on_battle_end"]
+[connection signal="pressed" from="CanvasLayer/ToBattle" to="." method="_on_ToBattle_pressed"]

@@ -30,8 +30,7 @@ func _ready():
 		_grid.append([])
 		for _y in range(0, grid_size.y):
 			_grid[x].append(null)
-	
-	
+		
 func _draw():
 	for x in range(0, grid_size.x):
 		for y in range(0, grid_size.y):
@@ -44,11 +43,9 @@ func _draw():
 func get_at(x:int, y:int):
 	return _grid[x][y]
 
-
 func has(object:Node):
 	return _grid_map.has(object)
 	
-
 func add(x:int, y:int, object:Node):
 	if not get_at(x, y):
 		_grid_map[object] = Vector2(x, y)
@@ -57,8 +54,7 @@ func add(x:int, y:int, object:Node):
 	else:
 		push_warning("Object already exists at this location, check before calling this function.")
 		return false
-		
-		
+				
 func move(object:Node, x:int, y:int):
 	if not _grid_map.has(object):
 		push_warning("Trying to move object that doesn't exist.")
@@ -74,7 +70,6 @@ func move(object:Node, x:int, y:int):
 	_grid_map[object] = Vector2(x, y)
 	return true
 	
-
 func remove(object:Node):
 	if not _grid_map.has(object):
 		push_warning("Trying to remove object that doesn't exist in grid.")

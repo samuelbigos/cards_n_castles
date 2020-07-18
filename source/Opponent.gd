@@ -22,6 +22,8 @@ var _units = []
 
 """ PUBLIC """
 
+const OPPONENT_TEAM_ID = 1
+
 ###########
 # METHODS #
 ###########
@@ -29,12 +31,10 @@ var _units = []
 """ PRIVATE """
 
 func _ready():
-	for x in range(0, level.size()):
-		for y in range(0, level[x].size()):
-			print(level[x][y])
+	pass
 			
 			
-func _on_Game_state_change(from, to):
+func _on_Game_state_change(_from, _to):
 	pass # Replace with function body.
 
 """ PUBLIC """
@@ -50,7 +50,10 @@ func setup(game):
 				
 			var card_data = _game.get_card_database().get_card_by_id(level[y][x])
 			var unit = _game.unit_scene.instance()
-			unit.init_with_data(card_data)
+			unit.init_with_data(card_data, OPPONENT_TEAM_ID)
 			unit.set_grid_pos(Vector2(opponent_start.x + x, opponent_start.y + y))
 			add_child(unit)
+			_units.append(unit)
 
+func get_units():
+	return _units
