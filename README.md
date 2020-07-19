@@ -4,6 +4,8 @@ Cards'n'Castles will be a deckbuilding, autobattling, medieval strategy game tha
 
 In the game you will build a deck of medieval units which you'll strategically position in a series of battles to become the King of England! As you progress, you'll get new cards and new options to deploy on the battlefield. After deployment, the battle is fully automated so you, as the commander, can see your strengths and weaknesses and prepare for the next battle.
 
+![Cards'n'Castles demo GIF](promo/cards_n_castles.gif)
+
 # Current progress
 
 * Deployment and battle game phases.
