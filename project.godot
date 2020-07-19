@@ -116,7 +116,7 @@ _global_script_class_icons={
 
 [application]
 
-config/name="Cards vs Castles"
+config/name="Cards'n'Castles"
 run/main_scene="res://source/Game.tscn"
 
 [autoload]
