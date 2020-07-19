@@ -9,6 +9,7 @@ Defines and stores info about the grid.
 
 """ PRIVATE """
 
+var _draw = false
 var _grid = [] # store objects at each grid loc
 var _grid_map = {} # dictionary to store object locations for quick grid operations
 
@@ -17,7 +18,6 @@ var _grid_map = {} # dictionary to store object locations for quick grid operati
 export var grid_size : Vector2
 export var cell_size : Vector2
 export var cell_padding : int 
-export var debug_render_grid : bool
 	
 ###########
 # METHODS #
@@ -32,19 +32,28 @@ func _ready():
 			_grid[x].append(null)
 		
 func _draw():
-	for x in range(0, grid_size.x):
-		for y in range(0, grid_size.y):
-			var rect = Rect2(x * (cell_size.x + cell_padding), y * (cell_size.y + cell_padding), cell_size.x, cell_size.y)
-			draw_rect(rect, Color("96b2c1"), false)
+	if _draw:
+		for x in range(0, grid_size.x):
+			for y in range(0, grid_size.y):
+				var rect = Rect2(x * (cell_size.x + cell_padding), y * (cell_size.y + cell_padding), cell_size.x, cell_size.y)
+				draw_rect(rect, Globals.palette_darkergreen, false)
 		
 	
 """ PUBLIC """
+
+func set_draw(draw):
+	_draw = draw
+	update()
 
 func get_at(x:int, y:int):
 	return _grid[x][y]
 
 func has(object:Node):
 	return _grid_map.has(object)
+	
+func get_unit_pos(object:Node):
+	assert(_grid_map.has(object))
+	return _grid_map[object]
 	
 func add(x:int, y:int, object:Node):
 	if not get_at(x, y):

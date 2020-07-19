@@ -31,7 +31,7 @@ func _determine_attack(all_units, this_unit, this_data):
 		
 		var range_to = Grid.cells_between(Grid.pos_to_grid_pos(this_unit.position), Grid.pos_to_grid_pos(unit.position))
 		var this_range = this_data.attack_range
-		var in_range = this_range >= range_to
+		var in_range = this_range >= range_to and range_to >= this_data.min_attack_range
 		if in_range: # TODO: attack highest priority in range rather than first in range
 			var attack_action = attack_action_script.new()
 			attack_action.target = unit

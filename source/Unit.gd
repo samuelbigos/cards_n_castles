@@ -18,11 +18,14 @@ enum State {
 
 """ PUBLIC """
 
-const SNAP_TIME = 0.25
+const SNAP_TIME = 0.2
+const DAMAGE_FLASH_TIME = 0.1
 
 signal on_turn_over
 signal on_movement_complete
 signal on_death(unit)
+signal on_picked(unit)
+signal on_unpicked(unit)
 
 var _game = null
 var _sticky = false
@@ -37,6 +40,9 @@ var _state = State.IDLE
 var _action = null
 var _health = 0
 var _max_health = 0
+var _colour
+var _damage_flashing = false
+var _damage_flash_timer = 0.0
 
 ###########
 # METHODS #
@@ -45,15 +51,14 @@ var _max_health = 0
 """ PRIVATE """
 
 func _ready():
-	$Sprite.modulate = Color("2e5266")
-	for pip in $Health.get_children():
-		pip.modulate = Color("d91f30")
+	$Sprite.modulate = Globals.palette_pale
 		
 func _process(delta):
 	if _sticky:
 		_move_to_mouse(get_viewport().get_mouse_position())
 		if Input.is_action_just_released("ui_select"):
 			_sticky = false
+			emit_signal("on_unpicked", self)
 			
 	if _snap_lerp_timer > 0.0:
 		position = _lerp(_snap_lerp_from, _snap_lerp_to, _snap_lerp_timer / SNAP_TIME)
@@ -61,6 +66,12 @@ func _process(delta):
 		if _snap_lerp_timer <= 0.0:
 			position = _snap_lerp_to
 			emit_signal("on_movement_complete")
+			
+	_damage_flash_timer -= delta
+	if _damage_flash_timer < 0.0 and _damage_flashing:
+		_damage_flash_timer = DAMAGE_FLASH_TIME
+		_damage_flashing = false
+		self.visible = true
 		
 	match _state:
 		State.IDLE:
@@ -91,6 +102,7 @@ func _move_to_grid_relative(pos:Vector2):
 		_snap_lerp_from = position
 		_snap_lerp_to = Grid.grid_pos_to_snapped_pos(global_pos)
 		_snap_lerp_timer = SNAP_TIME
+		_face_dir(pos)
 		return true
 	else:
 		return false
@@ -131,6 +143,7 @@ func _lerp(from, to, time):
 func _on_Area2D_mouse_entered():
 	if _process_input:
 		$Selection.visible = true
+		$Selection.modulate = Globals.palette_pale
 
 func _on_Area2D_mouse_exited():
 	if _process_input:
@@ -140,21 +153,42 @@ func _on_Area2D_input_event(_viewport, event, _shape_idx):
 	if _process_input: # TODO: Move this input logic to Player.gd
 		if event.is_action_pressed("ui_select"):
 			_sticky = true
+			emit_signal("on_picked", self)
 			
 func _on_BaseAction_on_action_complete(action):
 	_state = State.DETERMINE_ACTION
 	
-func _on_ActionAttach_on_hit(action, attack_damage):
+func _on_ActionAttack_on_hit(action, attack_damage):
 	_health -= attack_damage
+	self.visible = false
+	_damage_flashing = true
+	_damage_flash_timer = DAMAGE_FLASH_TIME
 	_update_health()
+	
+func _face_dir(dir):
+	if dir.x > 0:
+		$Sprite.flip_h = false
+		$SpriteAccent.flip_h = false
+	else:
+		$Sprite.flip_h = true
+		$SpriteAccent.flip_h = true
 
 """ PUBLIC """
 
 func init_with_data(card_data, team, game):
 	_cached_data = card_data.duplicate()
 	_game = game
+	if team == 0:
+		_colour = Globals.palette_teal
+	else:
+		_colour = Globals.palette_brown
+	
 	$Sprite.texture = _cached_data.sprite
-	$SpriteBG.texture = _cached_data.sprite_bg
+	$SpriteAccent.texture = _cached_data.sprite_accent
+	$SpriteAccent.modulate = _colour
+	for pip in $Health.get_children():
+		pip.modulate = _colour
+		
 	_max_health = _cached_data.health
 	_health = _cached_data.health
 	for i in range(0, $Health.get_child_count()):

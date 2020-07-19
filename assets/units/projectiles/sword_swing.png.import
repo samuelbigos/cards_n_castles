@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/arrow.png-a03cbdc148263c7c7ca87d7fd66ae767.stex"
+path="res://.import/sword_swing.png-7079b262da3aa092012e0a69c87e704e.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/units/arrow.png"
-dest_files=[ "res://.import/arrow.png-a03cbdc148263c7c7ca87d7fd66ae767.stex" ]
+source_file="res://assets/units/projectiles/sword_swing.png"
+dest_files=[ "res://.import/sword_swing.png-7079b262da3aa092012e0a69c87e704e.stex" ]
 
 [params]
 

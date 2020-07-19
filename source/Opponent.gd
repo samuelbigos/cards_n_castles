@@ -4,12 +4,12 @@ class_name Opponent
 Manages opponent units.
 """
 
-const opponent_start = Vector2(8, 4)
-const level = [[null, "maa", null, null, null],
-				["palisade", null, null, "archer", null],
+const opponent_start = Vector2(10, 4)
+const level = [[null, null, null, null, null],
+				[null, "maa", null, "archer", null],
 				[null, "maa", null, null, null],
-				["palisade", null, null, "archer", null],
-				[null, "maa", null, null, null]]
+				[null, "maa", null, "archer", null],
+				[null, null, null, null, null]]
 
 ###########
 # MEMBERS #
@@ -55,6 +55,7 @@ func setup(game):
 			unit.init_with_data(card_data, OPPONENT_TEAM_ID, _game)
 			unit.set_grid_pos(Vector2(opponent_start.x + x, opponent_start.y + y))
 			unit.connect("on_death", self, "on_Unit_on_death")
+			unit._face_dir(Vector2(-1, 0))
 			add_child(unit)
 			_units.append(unit)
 

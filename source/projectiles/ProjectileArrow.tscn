@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://source/projectiles/ProjectileArrow.gd" type="Script" id=1]
-[ext_resource path="res://assets/units/arrow.png" type="Texture" id=2]
+[ext_resource path="res://assets/units/projectiles/arrow.png" type="Texture" id=2]
 
 [node name="ProjectileArrow" type="Node2D"]
 script = ExtResource( 1 )

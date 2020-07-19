@@ -28,4 +28,4 @@ func _ready():
 	_rng.randomize()
 	var blood = _rng.randi_range(0, blood_images.size() - 1)
 	texture = blood_images[blood]
-	modulate = Color("d91f30")
+	modulate = Globals.palette_brown

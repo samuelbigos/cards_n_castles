@@ -1,13 +1,23 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://source/Unit.tscn" type="PackedScene" id=1]
 [ext_resource path="res://source/Game.gd" type="Script" id=2]
-[ext_resource path="res://source/Grid.tscn" type="PackedScene" id=3]
+[ext_resource path="res://source/Grid.gd" type="Script" id=3]
 [ext_resource path="res://source/Player.gd" type="Script" id=4]
 [ext_resource path="res://data/DatabaseCards.tscn" type="PackedScene" id=5]
 [ext_resource path="res://source/Opponent.gd" type="Script" id=6]
 [ext_resource path="res://source/BattleAutomator.gd" type="Script" id=7]
 [ext_resource path="res://source/effects/BloodPool.tscn" type="PackedScene" id=8]
+[ext_resource path="res://gui/font/PixelFont.tres" type="DynamicFont" id=9]
+[ext_resource path="res://gui/button_style_normal.tres" type="StyleBox" id=10]
+[ext_resource path="res://gui/button_style_disabled.tres" type="StyleBox" id=11]
+[ext_resource path="res://gui/button_style_pressed.tres" type="StyleBox" id=12]
+[ext_resource path="res://gui/button_style_hover.tres" type="StyleBox" id=13]
+[ext_resource path="res://gui/button_style_focus.tres" type="StyleBox" id=14]
+[ext_resource path="res://source/Env.gd" type="Script" id=15]
+[ext_resource path="res://assets/env/grass_1_spriteframe.tres" type="SpriteFrames" id=16]
+[ext_resource path="res://assets/env/road.png" type="Texture" id=18]
+[ext_resource path="res://source/AreaHighlights.gd" type="Script" id=19]
 
 [node name="Game" type="Node2D"]
 script = ExtResource( 2 )
@@ -15,8 +25,20 @@ unit_scene = ExtResource( 1 )
 blood_scene = ExtResource( 8 )
 
 [node name="Env" type="Node2D" parent="."]
+script = ExtResource( 15 )
+grass_texture = [ ExtResource( 16 ), ExtResource( 16 ) ]
+road_texture = [ ExtResource( 18 ) ]
+wind_speed = 150.0
+wind_frequency = 2.0
 
-[node name="Grid" parent="." instance=ExtResource( 3 )]
+[node name="AreaHighlights" type="Node2D" parent="."]
+script = ExtResource( 19 )
+
+[node name="Grid" type="Node2D" parent="."]
+script = ExtResource( 3 )
+grid_size = Vector2( 32, 32 )
+cell_size = Vector2( 16, 16 )
+cell_padding = 4
 
 [node name="Player" type="Node2D" parent="."]
 script = ExtResource( 4 )
@@ -30,17 +52,49 @@ script = ExtResource( 7 )
 
 [node name="DatabaseCards" parent="." instance=ExtResource( 5 )]
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[node name="GUI" type="CanvasLayer" parent="."]
 
-[node name="ToBattle" type="Button" parent="CanvasLayer"]
-margin_right = 12.0
-margin_bottom = 20.0
+[node name="Widget_ToBattle" type="CenterContainer" parent="GUI"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -240.46
+margin_top = -135.04
+margin_right = 239.54
+margin_bottom = 134.96
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Line2D" type="Line2D" parent="GUI/Widget_ToBattle"]
+points = PoolVector2Array( 240, 0, 240, 270 )
+width = 1.0
+default_color = Color( 0.819608, 0.819608, 0.819608, 1 )
+
+[node name="FightButton" type="Button" parent="GUI/Widget_ToBattle"]
+margin_left = 210.0
+margin_top = 128.0
+margin_right = 270.0
+margin_bottom = 142.0
+custom_styles/hover = ExtResource( 13 )
+custom_styles/pressed = ExtResource( 12 )
+custom_styles/focus = ExtResource( 14 )
+custom_styles/disabled = ExtResource( 11 )
+custom_styles/normal = ExtResource( 10 )
+custom_fonts/font = ExtResource( 9 )
+custom_colors/font_color_disabled = Color( 0.313726, 0.392157, 0.396078, 1 )
+custom_colors/font_color = Color( 0.0470588, 0.172549, 0.176471, 1 )
+custom_colors/font_color_hover = Color( 0.505882, 0.164706, 0.0509804, 1 )
+custom_colors/font_color_pressed = Color( 0.0470588, 0.172549, 0.176471, 1 )
 text = "To Battle!"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+[connection signal="state_change" from="." to="AreaHighlights" method="_on_Game_state_change"]
 [connection signal="state_change" from="." to="Player" method="_on_Game_state_change"]
 [connection signal="state_change" from="." to="Opponent" method="_on_Game_state_change"]
 [connection signal="state_change" from="." to="." method="_on_Game_state_change"]
 [connection signal="on_battle_end" from="BattleAutomator" to="." method="_on_BattleAutomator_on_battle_end"]
-[connection signal="pressed" from="CanvasLayer/ToBattle" to="." method="_on_ToBattle_pressed"]
+[connection signal="pressed" from="GUI/Widget_ToBattle/FightButton" to="." method="_on_ToBattle_pressed"]

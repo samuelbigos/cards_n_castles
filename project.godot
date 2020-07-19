@@ -24,10 +24,20 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://source/actions/ActionMove.gd"
 }, {
+"base": "Node2D",
+"class": "AreaHighlights",
+"language": "GDScript",
+"path": "res://source/AreaHighlights.gd"
+}, {
 "base": "Node",
 "class": "BaseAction",
 "language": "GDScript",
 "path": "res://source/actions/BaseAction.gd"
+}, {
+"base": "Node2D",
+"class": "BaseProjectile",
+"language": "GDScript",
+"path": "res://source/projectiles/BaseProjectile.gd"
 }, {
 "base": "Node2D",
 "class": "BattleAutomator",
@@ -38,6 +48,11 @@ _global_script_classes=[ {
 "class": "BloodPool",
 "language": "GDScript",
 "path": "res://source/effects/BloodPool.gd"
+}, {
+"base": "Node2D",
+"class": "Env",
+"language": "GDScript",
+"path": "res://source/Env.gd"
 }, {
 "base": "Node",
 "class": "Game",
@@ -54,10 +69,20 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://source/Player.gd"
 }, {
-"base": "Node2D",
+"base": "BaseProjectile",
 "class": "ProjectileArrow",
 "language": "GDScript",
 "path": "res://source/projectiles/ProjectileArrow.gd"
+}, {
+"base": "BaseProjectile",
+"class": "ProjectileMango",
+"language": "GDScript",
+"path": "res://source/projectiles/ProjectileMango.gd"
+}, {
+"base": "BaseProjectile",
+"class": "ProjectileSwordSwing",
+"language": "GDScript",
+"path": "res://source/projectiles/ProjectileSwordSwing.gd"
 }, {
 "base": "Node2D",
 "class": "Unit",
@@ -73,13 +98,18 @@ _global_script_class_icons={
 "AI": "",
 "ActionAttack": "",
 "ActionMove": "",
+"AreaHighlights": "",
 "BaseAction": "",
+"BaseProjectile": "",
 "BattleAutomator": "",
 "BloodPool": "",
+"Env": "",
 "Game": "",
 "Opponent": "",
 "Player": "",
 "ProjectileArrow": "",
+"ProjectileMango": "",
+"ProjectileSwordSwing": "",
 "Unit": "",
 "XXX": ""
 }
@@ -97,11 +127,11 @@ Grid="*res://source/Grid.tscn"
 
 [display]
 
-window/size/width=480
-window/size/height=270
-window/size/test_width=1440
-window/size/test_height=810
-window/stretch/mode="2d"
+window/size/width=320
+window/size/height=240
+window/size/test_width=960
+window/size/test_height=720
+window/stretch/mode="viewport"
 window/stretch/aspect="keep"
 
 [input]
@@ -117,4 +147,4 @@ ui_select={
 [rendering]
 
 quality/2d/use_pixel_snap=true
-environment/default_clear_color=Color( 0.827451, 0.815686, 0.796078, 1 )
+environment/default_clear_color=Color( 0.0470588, 0.172549, 0.176471, 1 )
