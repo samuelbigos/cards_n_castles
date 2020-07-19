@@ -88,7 +88,6 @@ _global_script_class_icons={
 
 config/name="Cards vs Castles"
 run/main_scene="res://source/Game.tscn"
-config/icon="res://icon.png"
 
 [autoload]
 
