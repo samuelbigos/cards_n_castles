@@ -4,7 +4,7 @@ Cards'n'Castles will be a deckbuilding, autobattling, medieval strategy game tha
 
 In the game you will build a deck of medieval units which you'll strategically position in a series of battles to become the King of England! As you progress, you'll get new cards and new options to deploy on the battlefield. After deployment, the battle is fully automated so you, as the commander, can see your strengths and weaknesses and prepare for the next battle.
 
-#Current progress
+# Current progress
 
 * Deployment and battle game phases.
 * 8 different units with different abilities and stats, including Man-At-Arms, Archer, Cavalry, Skirmisher, and Mangonel (not all available in the demo battle).
@@ -12,7 +12,7 @@ In the game you will build a deck of medieval units which you'll strategically p
 * 16x16 unit sprites, animated sprites for attacks.
 * Background grass and rubble distributed by 2D noise, and wind effects from animated grass.
 
-#Roadmap
+# Roadmap
 
 * Tutorial battle.
 * Tooltips to describe unit stats, strengths, and weaknesses.
@@ -21,7 +21,7 @@ In the game you will build a deck of medieval units which you'll strategically p
 * Level design.
 * Particles and sprite improvements/animations (idle, attack animations).
 
-#About
+# About
 
 Cards'n'Castles is build with Godot 3.2, and developed by Sam Bigos, a games industry engineer based in Brighton, UK, who is doing his first GameJam for fun, as a learning experience, and as an escape from the tedium of professional game development.
 
