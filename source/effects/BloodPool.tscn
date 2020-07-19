@@ -1,0 +1,10 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://source/effects/BloodPool.gd" type="Script" id=1]
+[ext_resource path="res://assets/effects/blood_3.png" type="Texture" id=2]
+[ext_resource path="res://assets/effects/blood_2.png" type="Texture" id=3]
+[ext_resource path="res://assets/effects/blood_1.png" type="Texture" id=4]
+
+[node name="BloodPool" type="Sprite"]
+script = ExtResource( 1 )
+blood_images = [ ExtResource( 4 ), ExtResource( 3 ), ExtResource( 2 ) ]

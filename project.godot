@@ -34,6 +34,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://source/BattleAutomator.gd"
 }, {
+"base": "Sprite",
+"class": "BloodPool",
+"language": "GDScript",
+"path": "res://source/effects/BloodPool.gd"
+}, {
 "base": "Node",
 "class": "Game",
 "language": "GDScript",
@@ -48,6 +53,11 @@ _global_script_classes=[ {
 "class": "Player",
 "language": "GDScript",
 "path": "res://source/Player.gd"
+}, {
+"base": "Node2D",
+"class": "ProjectileArrow",
+"language": "GDScript",
+"path": "res://source/projectiles/ProjectileArrow.gd"
 }, {
 "base": "Node2D",
 "class": "Unit",
@@ -65,9 +75,11 @@ _global_script_class_icons={
 "ActionMove": "",
 "BaseAction": "",
 "BattleAutomator": "",
+"BloodPool": "",
 "Game": "",
 "Opponent": "",
 "Player": "",
+"ProjectileArrow": "",
 "Unit": "",
 "XXX": ""
 }

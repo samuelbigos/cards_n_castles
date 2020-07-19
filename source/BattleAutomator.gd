@@ -23,8 +23,6 @@ var _state = State.BEGIN_TURN
 
 """ PUBLIC """
 
-const TURN_TIME_PADDING = 0.5
-
 signal on_battle_end(winner)
 
 ###########

@@ -10,11 +10,11 @@ Move action.
 
 """ PRIVATE """
 
-var direction = Vector2()
+var _started_move = false
 
 """ PUBLIC """
 
-var _started_move = false
+var direction = Vector2()
 
 ###########
 # METHODS #

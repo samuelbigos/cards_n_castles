@@ -42,6 +42,9 @@ func _on_Game_state_change(_from, to):
 		Globals.State.BATTLE:
 			for unit in _units:
 				unit._process_input = false
+				
+func on_Unit_on_death(unit):
+	_units.erase(unit)
 	
 """ PUBLIC """
 
@@ -51,8 +54,9 @@ func setup(game):
 	for card in starting_hand:
 		var card_data = _game.get_card_database().get_card_by_id(card)
 		var unit = _game.unit_scene.instance()
-		unit.init_with_data(card_data, PLAYER_TEAM_ID)
+		unit.init_with_data(card_data, PLAYER_TEAM_ID, _game)
 		unit.set_grid_pos(Vector2(0, current_pos))
+		unit.connect("on_death", self, "on_Unit_on_death")
 		add_child(unit)
 		_units.append(unit)
 		current_pos += 1

@@ -79,3 +79,16 @@ func remove(object:Node):
 	_grid[pos.x][pos.y] = null
 	_grid_map.erase(object)
 	return true
+
+func cells_between(pos1:Vector2, pos2:Vector2):
+	return abs(pos1.x - pos2.x) + abs(pos1.y - pos2.y)
+
+func pos_to_snapped_pos(pos:Vector2):
+	return grid_pos_to_snapped_pos(pos_to_grid_pos(pos))
+	
+func grid_pos_to_snapped_pos(pos:Vector2):
+	return pos * (cell_size + ((Vector2(1.0, 1.0) * cell_padding))) + cell_size * 0.5
+		
+func pos_to_grid_pos(pos:Vector2):
+	return Vector2(int(pos.x / (cell_size.x + cell_padding)),
+					int(pos.y / (cell_size.y + cell_padding)))

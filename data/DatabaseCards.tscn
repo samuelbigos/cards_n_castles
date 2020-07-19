@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://data/DatabaseCards.gd" type="Script" id=1]
 [ext_resource path="res://assets/units/archer_bg.png" type="Texture" id=2]
@@ -12,6 +12,7 @@
 [ext_resource path="res://assets/units/skirmisher.png" type="Texture" id=10]
 [ext_resource path="res://assets/units/spearman.png" type="Texture" id=11]
 [ext_resource path="res://assets/units/palisade.png" type="Texture" id=12]
+[ext_resource path="res://source/projectiles/ProjectileArrow.tscn" type="PackedScene" id=13]
 
 [node name="DatabaseCards" type="Node"]
 script = ExtResource( 1 )
@@ -21,41 +22,62 @@ id = "archer"
 sprite = ExtResource( 8 )
 sprite_bg = ExtResource( 2 )
 initiative = 2
+attack_range = 4
+projectile = ExtResource( 13 )
 
 [node name="Cavalry" parent="." instance=ExtResource( 3 )]
 id = "cavalry"
 sprite = ExtResource( 9 )
 initiative = 5
+health = 3
+move_count = 2
+projectile = ExtResource( 13 )
 
 [node name="Maa" parent="." instance=ExtResource( 3 )]
 id = "maa"
 sprite = ExtResource( 4 )
 initiative = 3
+health = 2
+projectile = ExtResource( 13 )
 
 [node name="Mangonel" parent="." instance=ExtResource( 3 )]
 id = "mangonel"
 sprite = ExtResource( 6 )
+health = 2
+projectile = ExtResource( 13 )
 
 [node name="Palisade" parent="." instance=ExtResource( 3 )]
 id = "palisade"
 sprite = ExtResource( 12 )
-can_move = false
+health = 4
+move_count = 0
+attack_count = 0
+projectile = ExtResource( 13 )
 
 [node name="Ram" parent="." instance=ExtResource( 3 )]
 id = "ram"
 sprite = ExtResource( 5 )
+health = 6
+projectile = ExtResource( 13 )
 
 [node name="Skirmisher" parent="." instance=ExtResource( 3 )]
 id = "skirmisher"
 sprite = ExtResource( 10 )
 initiative = 2
+attack_range = 3
+projectile = ExtResource( 13 )
 
 [node name="Spearman" parent="." instance=ExtResource( 3 )]
 id = "spearman"
 sprite = ExtResource( 11 )
 initiative = 3
+health = 2
+projectile = ExtResource( 13 )
 
 [node name="Stonewall" parent="." instance=ExtResource( 3 )]
 id = "stonewall"
 sprite = ExtResource( 7 )
-can_move = false
+health = 7
+move_count = 0
+attack_count = 0
+projectile = ExtResource( 13 )

@@ -4,6 +4,12 @@ class_name Unit
 Base for a unit on the battlefield.
 """
 
+enum State {
+	IDLE,
+	DETERMINE_ACTION,
+	PROCESS_ACTION
+}
+
 ###########
 # MEMBERS #
 ###########
@@ -16,7 +22,9 @@ const SNAP_TIME = 0.25
 
 signal on_turn_over
 signal on_movement_complete
+signal on_death(unit)
 
+var _game = null
 var _sticky = false
 var _mouse_grid_pos_last = Vector2()
 var _snap_lerp_timer = 0.0
@@ -25,9 +33,10 @@ var _snap_lerp_from = Vector2()
 var _process_input = false
 var _team = -1
 var _cached_data = null
-var _processing_turn = false
-var _processing_action = false
-var _action_stack = []
+var _state = State.IDLE
+var _action = null
+var _health = 0
+var _max_health = 0
 
 ###########
 # METHODS #
@@ -37,6 +46,8 @@ var _action_stack = []
 
 func _ready():
 	$Sprite.modulate = Color("2e5266")
+	for pip in $Health.get_children():
+		pip.modulate = Color("d91f30")
 		
 func _process(delta):
 	if _sticky:
@@ -51,25 +62,34 @@ func _process(delta):
 			position = _snap_lerp_to
 			emit_signal("on_movement_complete")
 		
-	if _processing_turn:
-		if _action_stack.size() == 0:
-			emit_signal("on_turn_over")
-			_processing_turn = false
-		else:
-			# process the action stack
-			if not _processing_action:
-				var action_to_process = _action_stack[0]
-				action_to_process.connect("on_action_complete", self, "_on_BaseAction_on_action_complete")
-				action_to_process.begin(self)
-				add_child(action_to_process)
-				_processing_action = true		
+	match _state:
+		State.IDLE:
+			pass
+			
+		State.DETERMINE_ACTION:
+			if _action:
+				_action.queue_free()
+				
+			_action = $AI.determine_actions(_game.get_all_units(), self, _cached_data)
+			if _action == null:
+				emit_signal("on_turn_over")
+				_state = State.IDLE
+			else:
+				_action.connect("on_action_complete", self, "_on_BaseAction_on_action_complete")
+				_action.begin(self)
+				add_child(_action)
+				_state = State.PROCESS_ACTION
+			
+		State.PROCESS_ACTION:
+			pass
+			
 			
 func _move_to_grid_relative(pos:Vector2):
-	var global_pos = _pos_to_grid_pos(position) + pos
+	var global_pos = Grid.pos_to_grid_pos(position) + pos
 	var moved = Grid.move(self, global_pos.x, global_pos.y)
 	if moved:
 		_snap_lerp_from = position
-		_snap_lerp_to = _grid_pos_to_snapped_pos(global_pos)
+		_snap_lerp_to = Grid.grid_pos_to_snapped_pos(global_pos)
 		_snap_lerp_timer = SNAP_TIME
 		return true
 	else:
@@ -77,28 +97,32 @@ func _move_to_grid_relative(pos:Vector2):
 					
 func _move_to_mouse(pos:Vector2):
 	# adjust pos to snap to grid
-	var mouse_grid_pos = _pos_to_grid_pos(pos)
+	var mouse_grid_pos = Grid.pos_to_grid_pos(pos)
 	if mouse_grid_pos != _mouse_grid_pos_last and Grid.get_at(mouse_grid_pos.x, mouse_grid_pos.y) == null:
-		_snap_lerp_from = _grid_pos_to_snapped_pos(_mouse_grid_pos_last)
-		_snap_lerp_to = _grid_pos_to_snapped_pos(mouse_grid_pos)
+		_snap_lerp_from = Grid.grid_pos_to_snapped_pos(_mouse_grid_pos_last)
+		_snap_lerp_to = Grid.grid_pos_to_snapped_pos(mouse_grid_pos)
 		_snap_lerp_timer = SNAP_TIME
 		Grid.move(self, mouse_grid_pos.x, mouse_grid_pos.y)
 		
 	_mouse_grid_pos_last = mouse_grid_pos
-		
-func _pos_to_snapped_pos(pos:Vector2):
-	return _grid_pos_to_snapped_pos(_pos_to_grid_pos(pos))
-	
-func _grid_pos_to_snapped_pos(pos:Vector2):
-	return pos * (Grid.cell_size + ((Vector2(1.0, 1.0) * Grid.cell_padding))) + Grid.cell_size * 0.5
-		
-func _pos_to_grid_pos(pos:Vector2):
-	return Vector2(int(pos.x / (Grid.cell_size.x + Grid.cell_padding)),
-					int(pos.y / (Grid.cell_size.y + Grid.cell_padding)))
 	
 func _in_hand():
 	# 1st column is in hand for now.
-	return _pos_to_snapped_pos(position).x == 0
+	return Grid.pos_to_snapped_pos(position).x == 0
+	
+func _update_health():
+	for i in range(0, $Health.get_child_count()):
+		if i < _health:
+			$Health.get_child(i).visible = true
+		else:
+			$Health.get_child(i).visible = false
+	if _health <= 0:
+		_die()
+		
+func _die():
+	# TODO: particles
+	emit_signal("on_death", self)
+	queue_free()
 	
 # time between 0-1
 func _lerp(from, to, time):
@@ -118,20 +142,29 @@ func _on_Area2D_input_event(_viewport, event, _shape_idx):
 			_sticky = true
 			
 func _on_BaseAction_on_action_complete(action):
-	_processing_action = false
-	_action_stack.erase(action)
-	action.queue_free()
+	_state = State.DETERMINE_ACTION
+	
+func _on_ActionAttach_on_hit(action, attack_damage):
+	_health -= attack_damage
+	_update_health()
 
 """ PUBLIC """
 
-func init_with_data(card_data, team):
-	$Sprite.texture = card_data.sprite
-	$SpriteBG.texture = card_data.sprite_bg
-	_team = team
+func init_with_data(card_data, team, game):
 	_cached_data = card_data.duplicate()
+	_game = game
+	$Sprite.texture = _cached_data.sprite
+	$SpriteBG.texture = _cached_data.sprite_bg
+	_max_health = _cached_data.health
+	_health = _cached_data.health
+	for i in range(0, $Health.get_child_count()):
+		if i < _max_health:
+			$Health.get_child(i).visible = true
+		
+	_team = team
 		
 func set_grid_pos(pos):
-	position = _grid_pos_to_snapped_pos(pos)
+	position = Grid.grid_pos_to_snapped_pos(pos)
 	_mouse_grid_pos_last = pos
 	if not Grid.has(self):
 		Grid.add(pos.x, pos.y, self)
@@ -141,7 +174,9 @@ func set_grid_pos(pos):
 func get_initiative():
 	return _cached_data.initiative
 
+func get_team():
+	return _team
+
 func do_turn():
-	_processing_turn = true
-	$AI.reset()
-	_action_stack = $AI.determine_actions(self)
+	_state = State.DETERMINE_ACTION
+	$AI.reset(_game.get_all_units(), self, _cached_data)

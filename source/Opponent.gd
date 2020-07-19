@@ -5,11 +5,11 @@ Manages opponent units.
 """
 
 const opponent_start = Vector2(8, 4)
-const level = [["palisade", "maa", null, null, null],
-				["palisade", "archer", null, null, null],
-				["palisade", "maa", null, "archer", null],
-				["palisade", "archer", null, null, null],
-				["palisade", "maa", null, null, null]]
+const level = [[null, "maa", null, null, null],
+				["palisade", null, null, "archer", null],
+				[null, "maa", null, null, null],
+				["palisade", null, null, "archer", null],
+				[null, "maa", null, null, null]]
 
 ###########
 # MEMBERS #
@@ -31,11 +31,13 @@ const OPPONENT_TEAM_ID = 1
 """ PRIVATE """
 
 func _ready():
-	pass
-			
+	pass			
 			
 func _on_Game_state_change(_from, _to):
 	pass # Replace with function body.
+	
+func on_Unit_on_death(unit):
+	_units.erase(unit)
 
 """ PUBLIC """
 
@@ -50,8 +52,9 @@ func setup(game):
 				
 			var card_data = _game.get_card_database().get_card_by_id(level[y][x])
 			var unit = _game.unit_scene.instance()
-			unit.init_with_data(card_data, OPPONENT_TEAM_ID)
+			unit.init_with_data(card_data, OPPONENT_TEAM_ID, _game)
 			unit.set_grid_pos(Vector2(opponent_start.x + x, opponent_start.y + y))
+			unit.connect("on_death", self, "on_Unit_on_death")
 			add_child(unit)
 			_units.append(unit)
 
