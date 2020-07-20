@@ -37,23 +37,31 @@ func _on_Game_state_change(_from, to):
 			for unit in _units:
 				unit._process_input = false
 				
-func on_Unit_on_death(unit):
+func _on_Unit_on_death(unit):
 	_units.erase(unit)
+	
+func _spawn_unit(pos, card_data):
+	var unit = _game.unit_scene.instance()
+	unit.init_with_data(card_data, PLAYER_TEAM_ID, _game)
+	unit.set_being_dragged(Grid.pos_to_grid_pos(pos))
+	Grid.set_draw(true)
+	unit.connect("on_death", self, "_on_Unit_on_death")
+	add_child(unit)
+	_units.append(unit)
+	
+func _on_Card_on_card_activated(card_data):
+	_spawn_unit(get_global_mouse_position(), card_data)
 	
 """ PUBLIC """
 
 func setup(game):
 	_game = game
-	var current_pos = 0
+	var card_data_list = []
 	for card in starting_hand:
 		var card_data = _game.get_card_database().get_card_by_id(card)
-		var unit = _game.unit_scene.instance()
-		unit.init_with_data(card_data, PLAYER_TEAM_ID, _game)
-		unit.set_grid_pos(Globals.BENCH_AREA_POS + Vector2(0, current_pos))
-		unit.connect("on_death", self, "on_Unit_on_death")
-		add_child(unit)
-		_units.append(unit)
-		current_pos += 1
+		card_data_list.append(card_data)
+		
+	$CanvasLayer/PlayerHand.setup(card_data_list, self)
 
 func get_units():
 	return _units

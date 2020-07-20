@@ -36,7 +36,7 @@ func _ready():
 func _on_Game_state_change(_from, _to):
 	pass # Replace with function body.
 	
-func on_Unit_on_death(unit):
+func _on_Unit_on_death(unit):
 	_units.erase(unit)
 
 """ PUBLIC """
@@ -54,7 +54,7 @@ func setup(game):
 			var unit = _game.unit_scene.instance()
 			unit.init_with_data(card_data, OPPONENT_TEAM_ID, _game)
 			unit.set_grid_pos(Vector2(opponent_start.x + x, opponent_start.y + y))
-			unit.connect("on_death", self, "on_Unit_on_death")
+			unit.connect("on_death", self, "_on_Unit_on_death")
 			unit._face_dir(Vector2(-1, 0))
 			add_child(unit)
 			_units.append(unit)

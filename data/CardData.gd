@@ -3,6 +3,7 @@ extends Node
 export var id : String = ""
 export var sprite : StreamTexture = null
 export var sprite_accent : StreamTexture = null
+export var card_sprite : StreamTexture = null
 export var initiative : int = 0 # higher initiative goes first
 export var attack_range : int = 1 # attack range in cells
 export var min_attack_range : int = 1

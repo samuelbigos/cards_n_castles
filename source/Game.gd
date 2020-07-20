@@ -29,13 +29,11 @@ signal state_change(from, to)
 func _ready():
 	$Player.setup(self)
 	$Opponent.setup(self)
-	for unit in get_all_units():
-		unit.connect("on_death", self, "on_Unit_on_death")
-		unit.connect("on_picked", self, "on_Unit_on_picked")
-		unit.connect("on_unpicked", self, "on_Unit_on_unpicked")
 		
 	VisualServer.set_default_clear_color(Globals.palette_darkgreen)
 	change_state(Globals.State.DEPLOY)
+	
+	$Player/CanvasLayer/PlayerHand.position = Vector2(get_viewport().size.x * 0.5, get_viewport().size.y)
 	
 func _process_results(winner):
 	if winner:
@@ -60,20 +58,32 @@ func _on_BattleAutomator_on_battle_end(winner):
 	_winner = winner
 	change_state(Globals.State.RESULTS)
 	
-func on_Unit_on_death(unit):
+func _on_Unit_on_death(unit):
 	var blood = blood_scene.instance()
 	blood.position = unit.position
 	$Env.add_child(blood)
 	
-func on_Unit_on_picked(unit):
-	$Grid.set_draw(true)
+func _on_Unit_on_picked(unit):
+	$Grid/DrawGrid.set_visible(true)
 	$AreaHighlights.animate_deploy = true
-	$AreaHighlights.animate_bench = false
+	$AreaHighlights._draw_deploy = true
+	$AreaHighlights.update()
 	
-func on_Unit_on_unpicked(unit):
-	$Grid.set_draw(false)
+func _on_Card_on_card_picked(card_data):
+	$AreaHighlights.animate_deploy = true
+	$AreaHighlights._draw_deploy = true
+	$AreaHighlights.update()
+	
+func _on_Unit_on_unpicked(unit):
+	$Grid/DrawGrid.set_visible(false)
 	$AreaHighlights.animate_deploy = false
-	$AreaHighlights.animate_bench = true
+	$AreaHighlights._draw_deploy = false
+	$AreaHighlights.update()
+	
+func _on_Card_on_card_unpicked(card_data):
+	$AreaHighlights.animate_deploy = false
+	$AreaHighlights._draw_deploy = false
+	$AreaHighlights.update()
 	
 """ PUBLIC """
 

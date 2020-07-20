@@ -43,6 +43,7 @@ var _max_health = 0
 var _colour
 var _damage_flashing = false
 var _damage_flash_timer = 0.0
+var _hovered = false
 
 ###########
 # METHODS #
@@ -66,6 +67,11 @@ func _process(delta):
 		if _snap_lerp_timer <= 0.0:
 			position = _snap_lerp_to
 			emit_signal("on_movement_complete")
+		
+	if _hovered or _sticky:
+		$Selection.visible = true
+	else:
+		$Selection.visible = false			
 			
 	_damage_flash_timer -= delta
 	if _damage_flash_timer < 0.0 and _damage_flashing:
@@ -110,13 +116,16 @@ func _move_to_grid_relative(pos:Vector2):
 func _move_to_mouse(pos:Vector2):
 	# adjust pos to snap to grid
 	var mouse_grid_pos = Grid.pos_to_grid_pos(pos)
-	if mouse_grid_pos != _mouse_grid_pos_last and Grid.get_at(mouse_grid_pos.x, mouse_grid_pos.y) == null:
+	var can_move = mouse_grid_pos != _mouse_grid_pos_last 
+	can_move = can_move and Grid.get_at(mouse_grid_pos.x, mouse_grid_pos.y) == null
+	can_move = can_move and Globals.is_over_deploy_zone(pos)
+	
+	if can_move:
 		_snap_lerp_from = Grid.grid_pos_to_snapped_pos(_mouse_grid_pos_last)
 		_snap_lerp_to = Grid.grid_pos_to_snapped_pos(mouse_grid_pos)
 		_snap_lerp_timer = SNAP_TIME
 		Grid.move(self, mouse_grid_pos.x, mouse_grid_pos.y)
-		
-	_mouse_grid_pos_last = mouse_grid_pos
+		_mouse_grid_pos_last = mouse_grid_pos	
 	
 func _in_hand():
 	# 1st column is in hand for now.
@@ -142,12 +151,12 @@ func _lerp(from, to, time):
 	
 func _on_Area2D_mouse_entered():
 	if _process_input:
-		$Selection.visible = true
+		_hovered = true
 		$Selection.modulate = Globals.palette_pale
 
 func _on_Area2D_mouse_exited():
 	if _process_input:
-		$Selection.visible = false
+		_hovered = false
 
 func _on_Area2D_input_event(_viewport, event, _shape_idx):
 	if _process_input: # TODO: Move this input logic to Player.gd
@@ -194,7 +203,11 @@ func init_with_data(card_data, team, game):
 	for i in range(0, $Health.get_child_count()):
 		if i < _max_health:
 			$Health.get_child(i).visible = true
-		
+			
+	connect("on_death", _game, "_on_Unit_on_death")
+	connect("on_picked", _game, "_on_Unit_on_picked")
+	connect("on_unpicked", _game, "_on_Unit_on_unpicked")
+	
 	_team = team
 		
 func set_grid_pos(pos):
@@ -204,6 +217,13 @@ func set_grid_pos(pos):
 		Grid.add(pos.x, pos.y, self)
 	else:
 		Grid.move(self, pos.x, pos.y)
+		
+func set_being_dragged(pos):
+	_sticky = true
+	_process_input = true
+	_mouse_grid_pos_last = pos
+	set_grid_pos(pos)
+	emit_signal("on_picked", self)
 
 func get_initiative():
 	return _cached_data.initiative

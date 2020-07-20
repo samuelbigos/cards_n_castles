@@ -1,8 +1,8 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://data/DatabaseCards.gd" type="Script" id=1]
 [ext_resource path="res://source/projectiles/ProjectileSwordSwing.tscn" type="PackedScene" id=2]
-[ext_resource path="res://data/Card.tscn" type="PackedScene" id=3]
+[ext_resource path="res://data/CardData.tscn" type="PackedScene" id=3]
 [ext_resource path="res://assets/units/maa.png" type="Texture" id=4]
 [ext_resource path="res://assets/units/ram.png" type="Texture" id=5]
 [ext_resource path="res://assets/units/mangonel.png" type="Texture" id=6]
@@ -15,6 +15,9 @@
 [ext_resource path="res://source/projectiles/ProjectileArrow.tscn" type="PackedScene" id=13]
 [ext_resource path="res://assets/units/maa_accent.png" type="Texture" id=14]
 [ext_resource path="res://source/projectiles/ProjectileMango.tscn" type="PackedScene" id=15]
+[ext_resource path="res://assets/cards/maa.png" type="Texture" id=16]
+[ext_resource path="res://assets/cards/cavalry.png" type="Texture" id=17]
+[ext_resource path="res://assets/cards/archer.png" type="Texture" id=18]
 
 [node name="DatabaseCards" type="Node"]
 script = ExtResource( 1 )
@@ -22,6 +25,7 @@ script = ExtResource( 1 )
 [node name="Archer" parent="." instance=ExtResource( 3 )]
 id = "archer"
 sprite = ExtResource( 8 )
+card_sprite = ExtResource( 18 )
 initiative = 2
 attack_range = 4
 health = 2
@@ -30,6 +34,7 @@ projectile = ExtResource( 13 )
 [node name="Cavalry" parent="." instance=ExtResource( 3 )]
 id = "cavalry"
 sprite = ExtResource( 9 )
+card_sprite = ExtResource( 17 )
 initiative = 5
 health = 4
 move_count = 2
@@ -39,6 +44,7 @@ projectile = ExtResource( 2 )
 id = "maa"
 sprite = ExtResource( 4 )
 sprite_accent = ExtResource( 14 )
+card_sprite = ExtResource( 16 )
 initiative = 3
 health = 3
 projectile = ExtResource( 2 )

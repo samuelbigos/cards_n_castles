@@ -72,6 +72,9 @@ func _ready():
 				road.position = Vector2(x / density, y / density)
 				road.position += random_adjust
 				add_child(road)
+		
+	$BG.scale = get_viewport().size
+	$BG.modulate = Globals.palette_darkgreen
 	
 func _process(delta):
 	_wind_timer -= delta
