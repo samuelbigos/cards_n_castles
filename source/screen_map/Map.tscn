@@ -1,0 +1,36 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://source/screen_map/Map.gd" type="Script" id=1]
+[ext_resource path="res://source/screen_map/MapNode.tscn" type="PackedScene" id=2]
+[ext_resource path="res://source/Game.tscn" type="PackedScene" id=3]
+
+[node name="Map" type="Node2D"]
+script = ExtResource( 1 )
+game_scene = ExtResource( 3 )
+intro_scene_path = "res://source/screen_intro/Intro.tscn"
+
+[node name="Nodes" type="Node" parent="."]
+
+[node name="Node" parent="Nodes" instance=ExtResource( 2 )]
+position = Vector2( 42.4264, 41.7193 )
+
+[node name="Node2" parent="Nodes" instance=ExtResource( 2 )]
+position = Vector2( 36.9029, 143.085 )
+
+[node name="Node3" parent="Nodes" instance=ExtResource( 2 )]
+position = Vector2( 90.9966, 189.755 )
+
+[node name="Node4" parent="Nodes" instance=ExtResource( 2 )]
+position = Vector2( 183.981, 198.593 )
+
+[node name="Node5" parent="Nodes" instance=ExtResource( 2 )]
+position = Vector2( 140.141, 119.044 )
+
+[node name="Node6" parent="Nodes" instance=ExtResource( 2 )]
+position = Vector2( 177.264, 46.2118 )
+
+[node name="Node7" parent="Nodes" instance=ExtResource( 2 )]
+position = Vector2( 260.349, 48.3332 )
+
+[node name="Node8" parent="Nodes" instance=ExtResource( 2 )]
+position = Vector2( 272.723, 134.247 )

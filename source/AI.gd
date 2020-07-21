@@ -12,6 +12,8 @@ Processes unit UI/behaviours.
 
 var _attack_count = 0
 var _move_count = 0
+var _did_move = false
+var _did_attack = false
 
 """ PUBLIC """
 
@@ -25,6 +27,9 @@ export var attack_action_script : Resource
 """ PRIVATE """
 
 func _determine_attack(all_units, this_unit, this_data):
+	if _did_move and not this_data.move_and_shoot:
+		return null
+		
 	for unit in all_units:
 		if unit.get_team() == this_unit.get_team():
 			continue
@@ -37,11 +42,15 @@ func _determine_attack(all_units, this_unit, this_data):
 			attack_action.target = unit
 			attack_action.unit_data = this_data
 			attack_action.attack_damage = this_data.damage
+			_did_attack = true
 			return attack_action
 			
 	return null
 	
 func _determine_move(all_units, this_unit, this_data):
+	if _did_attack and not this_data.move_and_shoot:
+		return null
+		
 	var closest_unit = null
 	var closest_range = 99
 	for unit in all_units:
@@ -57,11 +66,13 @@ func _determine_move(all_units, this_unit, this_data):
 	if closest_unit == null:
 		var move_action = move_action_script.new()
 		move_action.direction = Vector2(0, 0)
+		_did_move = true
 		return move_action
 	
 	var in_range = this_data.attack_range >= closest_range
 	if not in_range or not this_data.prefer_max_range:
-		var vector = Grid.pos_to_grid_pos(closest_unit.position) - Grid.pos_to_grid_pos(this_unit.position)
+		var path_point = Grid.get_astar_path(this_unit.position, closest_unit.position)
+		var vector = Grid.pos_to_grid_pos(path_point) - Grid.pos_to_grid_pos(this_unit.position)
 		var move_dir = Vector2()
 		if abs(vector.x) > abs(vector.y):
 			if vector.x > 0: move_dir.x += 1
@@ -72,6 +83,7 @@ func _determine_move(all_units, this_unit, this_data):
 			
 		var move_action = move_action_script.new()
 		move_action.direction = move_dir
+		_did_move = true
 		return move_action
 		
 	return null
@@ -81,8 +93,12 @@ func _determine_move(all_units, this_unit, this_data):
 func reset(all_units, this_unit, this_data):
 	_attack_count = this_data.attack_count
 	_move_count = this_data.move_count
+	_did_move = false
+	_did_attack = false
 	
 func determine_actions(all_units, this_unit, this_data):
+	# update the a* grid to take into account current unit positions.
+	Grid.update_grid()
 	
 	if _attack_count > 0:
 		var action = _determine_attack(all_units, this_unit, this_data)

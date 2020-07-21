@@ -7,6 +7,7 @@ Manages the automation of a battle.
 enum State {
 	BEGIN_TURN,
 	UNIT_PROCESSING,
+	TURN_DELAY,
 	END_TURN
 }
 
@@ -20,10 +21,9 @@ var _running = false
 var _units = []
 var _current_unit = null
 var _state = State.BEGIN_TURN
+var _turn_delay = 0.05
 
 """ PUBLIC """
-
-signal on_battle_end(winner)
 
 ###########
 # METHODS #
@@ -31,7 +31,7 @@ signal on_battle_end(winner)
 
 """ PRIVATE """
 
-func _process(_delta):
+func _process(delta):
 	if not _running:
 		return
 		
@@ -45,15 +45,16 @@ func _process(_delta):
 		State.UNIT_PROCESSING:
 			pass
 			
+		State.TURN_DELAY:
+			_turn_delay -= delta
+			if _turn_delay < 0.0:
+				_state = State.END_TURN
+			
 		State.END_TURN:
 			# clear out any units that may have been freed
 			for i in range(_units.size() - 1, 0, -1):
 				if not is_instance_valid(_units[i]):
 					_units.remove(i)
-			
-			# check there are still units in the battle
-			if _units.size() == 0:
-				_end_battle(-1)
 			
 			# put our current unit to the back of the queue and process next one
 			_current_unit.disconnect("on_turn_over", self, "_on_Unit_on_turn_over")
@@ -62,12 +63,8 @@ func _process(_delta):
 			_current_unit = _units[0]
 			_state = State.BEGIN_TURN
 			
-func _end_battle(winner:int):
-	_running = false
-	emit_signal("on_battle_end", winner)
-	
 func _on_Unit_on_turn_over():
-	_state = State.END_TURN
+	_state = State.TURN_DELAY
 	
 func _sort_by_initiative(a, b):
 	return a._cached_data.initiative > b._cached_data.initiative
@@ -83,3 +80,6 @@ func begin(units):
 	_units.sort_custom(self, "_sort_by_initiative")
 	if units.size() > 0:
 		_current_unit = _units[0]
+		
+func end():
+	_running = false

@@ -55,6 +55,11 @@ _global_script_classes=[ {
 "path": "res://source/Card.gd"
 }, {
 "base": "Node2D",
+"class": "CardSelect",
+"language": "GDScript",
+"path": "res://source/screen_cardselect/CardSelect.gd"
+}, {
+"base": "Node2D",
 "class": "DrawGrid",
 "language": "GDScript",
 "path": "res://source/DrawGrid.gd"
@@ -68,6 +73,26 @@ _global_script_classes=[ {
 "class": "Game",
 "language": "GDScript",
 "path": "res://source/Game.gd"
+}, {
+"base": "Node2D",
+"class": "Intro",
+"language": "GDScript",
+"path": "res://source/screen_intro/Intro.gd"
+}, {
+"base": "Reference",
+"class": "Levels",
+"language": "GDScript",
+"path": "res://source/Levels.gd"
+}, {
+"base": "Node2D",
+"class": "Map",
+"language": "GDScript",
+"path": "res://source/screen_map/Map.gd"
+}, {
+"base": "Node",
+"class": "MapNode",
+"language": "GDScript",
+"path": "res://source/screen_map/MapNode.gd"
 }, {
 "base": "Node2D",
 "class": "Opponent",
@@ -104,6 +129,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://source/Unit.gd"
 }, {
+"base": "CenterContainer",
+"class": "Widget_Popup",
+"language": "GDScript",
+"path": "res://source/gui/Widget_Popup.gd"
+}, {
 "base": "Node",
 "class": "XXX",
 "language": "GDScript",
@@ -119,9 +149,14 @@ _global_script_class_icons={
 "BattleAutomator": "",
 "BloodPool": "",
 "Card": "",
+"CardSelect": "",
 "DrawGrid": "",
 "Env": "",
 "Game": "",
+"Intro": "",
+"Levels": "",
+"Map": "",
+"MapNode": "",
 "Opponent": "",
 "Player": "",
 "PlayerHand": "",
@@ -129,19 +164,21 @@ _global_script_class_icons={
 "ProjectileMango": "",
 "ProjectileSwordSwing": "",
 "Unit": "",
+"Widget_Popup": "",
 "XXX": ""
 }
 
 [application]
 
 config/name="Cards'n'Castles"
-run/main_scene="res://source/Game.tscn"
+run/main_scene="res://source/screen_map/Map.tscn"
 
 [autoload]
 
+Grid="*res://source/Grid.gd"
+PlayerData="*res://source/PlayerData.gd"
 Globals="*res://source/Globals.gd"
-DatabaseCards="res://data/DatabaseCards.gd"
-Grid="*res://source/Grid.tscn"
+DatabaseCards="*res://data/DatabaseCards.tscn"
 
 [display]
 

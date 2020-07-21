@@ -1,4 +1,4 @@
-extends Node2D
+extends Node
 """
 Defines and stores info about the grid.
 """
@@ -9,15 +9,16 @@ Defines and stores info about the grid.
 
 """ PRIVATE """
 
-var _draw = false
 var _grid = [] # store objects at each grid loc
 var _grid_map = {} # dictionary to store object locations for quick grid operations
+var _grid_astar_id_map = {} # maps astar node ids onto grid locations
+var _astar
 
 """ PUBLIC """
 
-export var grid_size : Vector2
-export var cell_size : Vector2
-export var cell_padding : int 
+const GRID_SIZE = Vector2(32, 32)
+const CELL_SIZE = Vector2(16, 16)
+const CELL_PADDING = 4
 	
 ###########
 # METHODS #
@@ -26,16 +27,43 @@ export var cell_padding : int
 """ PRIVATE """
 	
 func _ready():
-	for x in range(0, grid_size.x):
+	_astar = AStar.new()
+	
+	for x in range(0, GRID_SIZE.x):
 		_grid.append([])
-		for _y in range(0, grid_size.y):
+		for y in range(0, GRID_SIZE.y):
 			_grid[x].append(null)
+			
+			var id = _astar.get_point_count()
+			_astar.add_point(id, Vector3(x, y, 0))
+			_grid_astar_id_map[Vector2(x, y)] = id
+			if x > 0:
+				_astar.connect_points(id, _grid_astar_id_map[Vector2(x - 1, y)])
+			if y > 0:
+				_astar.connect_points(id, _grid_astar_id_map[Vector2(x, y - 1)])
+	
 	
 """ PUBLIC """
 
-func set_draw(draw):
-	_draw = draw
-	update()
+func update_grid():
+	for x in range(0, GRID_SIZE.x):
+		for y in range(0, GRID_SIZE.y):
+			_astar.set_point_disabled(_grid_astar_id_map[Vector2(x, y)], get_at(x, y) != null)
+			
+func get_astar_path(from:Vector2, to:Vector2):
+	var from_grid = pos_to_grid_pos(from)
+	var to_grid = pos_to_grid_pos(to)
+	_astar.set_point_disabled(_grid_astar_id_map[from_grid], false)
+	_astar.set_point_disabled(_grid_astar_id_map[to_grid], false)
+	var from_id = _grid_astar_id_map[from_grid]
+	var to_id = _grid_astar_id_map[to_grid]
+	var id_path = _astar.get_id_path(from_id, to_id)
+	_astar.set_point_disabled(_grid_astar_id_map[from_grid], true)
+	_astar.set_point_disabled(_grid_astar_id_map[to_grid], true)
+	if id_path.size() < 2:
+		return to
+	var first_id_pos = _astar.get_point_position(id_path[1])
+	return grid_pos_to_snapped_pos(Vector2(first_id_pos.x, first_id_pos.y))
 
 func get_at(x:int, y:int):
 	return _grid[x][y]
@@ -88,8 +116,9 @@ func pos_to_snapped_pos(pos:Vector2):
 	return grid_pos_to_snapped_pos(pos_to_grid_pos(pos))
 	
 func grid_pos_to_snapped_pos(pos:Vector2):
-	return pos * (cell_size + ((Vector2(1.0, 1.0) * cell_padding))) + cell_size * 0.5
+	return pos * (CELL_SIZE + ((Vector2(1.0, 1.0) * CELL_PADDING))) + CELL_SIZE * 0.5
 		
 func pos_to_grid_pos(pos:Vector2):
-	return Vector2(int(pos.x / (cell_size.x + cell_padding)),
-					int(pos.y / (cell_size.y + cell_padding)))
+	return Vector2(int(pos.x / (CELL_SIZE.x + CELL_PADDING)),
+					int(pos.y / (CELL_SIZE.y + CELL_PADDING)))
+		

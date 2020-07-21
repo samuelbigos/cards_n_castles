@@ -27,8 +27,8 @@ id = "archer"
 sprite = ExtResource( 8 )
 card_sprite = ExtResource( 18 )
 initiative = 2
-attack_range = 4
-health = 2
+attack_range = 3
+move_and_shoot = false
 projectile = ExtResource( 13 )
 
 [node name="Cavalry" parent="." instance=ExtResource( 3 )]
@@ -36,7 +36,7 @@ id = "cavalry"
 sprite = ExtResource( 9 )
 card_sprite = ExtResource( 17 )
 initiative = 5
-health = 4
+health = 3
 move_count = 2
 projectile = ExtResource( 2 )
 

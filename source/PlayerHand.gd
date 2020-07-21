@@ -38,11 +38,11 @@ func _process(delta):
 	
 	#_cards.sort_custom(self, "_sort_by_x")
 	
-func _on_Card_on_card_picked(card_data):
+func _on_Card_on_card_picked(card_data, card):
 	for card in _cards:
 		card.set_picking_enabled(false)
 	
-func _on_Card_on_card_unpicked(card_data):
+func _on_Card_on_card_unpicked(card_data, card):
 	for card in _cards:
 		card.set_picking_enabled(true)
 
@@ -57,8 +57,8 @@ func setup(cards, player): # array of CardData
 	for card in cards:
 		var card_instance = CardScene.instance()
 		card_instance.setup(card)
-		card_instance.connect("on_card_activated", _player, "_on_Card_on_card_activated")
 		card_instance.connect("on_card_picked", _player._game, "_on_Card_on_card_picked")
+		card_instance.connect("on_card_unpicked", _player, "_on_Card_on_card_unpicked")
 		card_instance.connect("on_card_unpicked", _player._game, "_on_Card_on_card_unpicked")
 		card_instance.connect("on_card_picked", self, "_on_Card_on_card_picked")
 		card_instance.connect("on_card_unpicked", self, "_on_Card_on_card_unpicked")

@@ -16,12 +16,12 @@ var _picking_enabled = true
 
 """ PUBLIC """
 
-signal on_card_activated(card_data)
-signal on_card_picked(card_data)
-signal on_card_unpicked(card_data)
+signal on_card_picked(card_data, card)
+signal on_card_unpicked(card_data, card)
 
-const HOVER_TWEEN_DISTANCE = 30.0
 const HOVER_TWEEN_TIME = 0.2
+
+var hover_tween_distance = 30.0
 
 ###########
 # METHODS #
@@ -33,18 +33,14 @@ func _process(delta):
 	if _sticky:
 		$Sprite.position = get_local_mouse_position()
 		
-	if Input.is_action_just_released("ui_select"):
-		_sticky = false
-		emit_signal("on_card_unpicked", self)
-		_reset_pos()
-		
-	if _sticky and Globals.is_over_deploy_zone(get_global_mouse_position()):
-		spawn_unit()
-		queue_free()
+		if Input.is_action_just_released("ui_select"):
+			_sticky = false
+			emit_signal("on_card_unpicked", _card_data, self)
+			_reset_pos()
 		
 func _reset_pos():
 	$Sprite.position = Vector2(0.0, 0.0)
-	$Sprite/Area2D.position = Vector2(0.0, 0.0)
+	$Area2D.position = Vector2(0.0, 0.0)
 	$Sprite.z_index = 0
 	$Tween.stop_all()
 
@@ -52,13 +48,13 @@ func _on_Area2D_mouse_entered():
 	if not _sticky and _picking_enabled:
 		$Sprite.z_index = 1
 		$Tween.interpolate_property($Sprite, "position", Vector2(0.0, 0.0), 
-			Vector2(0.0, -HOVER_TWEEN_DISTANCE), HOVER_TWEEN_TIME, Tween.TRANS_CIRC, Tween.EASE_OUT)
+			Vector2(0.0, -hover_tween_distance), HOVER_TWEEN_TIME, Tween.TRANS_CIRC, Tween.EASE_OUT)
 		$Tween.start()
 
 func _on_Area2D_mouse_exited():
 	if not _sticky and _picking_enabled:
 		_reset_pos()
-		$Tween.interpolate_property($Sprite, "position", Vector2(0.0, -HOVER_TWEEN_DISTANCE), 
+		$Tween.interpolate_property($Sprite, "position", Vector2(0.0, -hover_tween_distance), 
 			Vector2(0.0, 0.0), HOVER_TWEEN_TIME, Tween.TRANS_CIRC, Tween.EASE_OUT)
 		$Tween.start()
 
@@ -70,17 +66,15 @@ func _on_Area2D_input_event(viewport, event, shape_idx):
 
 """ PUBLIC """
 
-func setup(card):
+func setup(card, in_hand = true):
 	$Sprite.texture = card.card_sprite
 	_card_data = card
-	var collision_shape = $Sprite/Area2D/CollisionShape2D
+	var collision_shape = $Area2D/CollisionShape2D
 	var shape = RectangleShape2D.new()
 	shape.extents = $Sprite.get_rect().size * 0.5
-	shape.extents.x *= 0.5
+	if in_hand:
+		shape.extents.x *= 0.6
 	collision_shape.shape = shape
-	
-func spawn_unit():
-	emit_signal("on_card_activated", _card_data)
 
 func get_width():
 	return $Sprite.get_rect().size.x

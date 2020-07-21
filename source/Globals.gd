@@ -19,6 +19,6 @@ var palette_darkergreen = Color("071c1e")
 
 # utils
 func is_over_deploy_zone(pos):
-	var rect_pos = Globals.DEPLOY_AREA_POS * (Grid.cell_size + Vector2(Grid.cell_padding, Grid.cell_padding))
-	var rect_size = Globals.DEPLOY_AREA_SIZE * (Grid.cell_size + Vector2(Grid.cell_padding, Grid.cell_padding))
+	var rect_pos = Globals.DEPLOY_AREA_POS * (Grid.CELL_SIZE + Vector2(Grid.CELL_PADDING, Grid.CELL_PADDING))
+	var rect_size = Globals.DEPLOY_AREA_SIZE * (Grid.CELL_SIZE + Vector2(Grid.CELL_PADDING, Grid.CELL_PADDING))
 	return Rect2(rect_pos, rect_size).has_point(pos)
