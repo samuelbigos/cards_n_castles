@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/Socapex - new_hits_3.wav-c8a2028d2f81259945f846f3c45b097a.sample"
+
+[deps]
+
+source_file="res://assets/audio/sword/Socapex - new_hits_3.wav"
+dest_files=[ "res://.import/Socapex - new_hits_3.wav-c8a2028d2f81259945f846f3c45b097a.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

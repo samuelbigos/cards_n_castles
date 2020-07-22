@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://source/screen_map/Map.gd" type="Script" id=1]
 [ext_resource path="res://source/screen_map/MapNode.tscn" type="PackedScene" id=2]
 [ext_resource path="res://source/Game.tscn" type="PackedScene" id=3]
+[ext_resource path="res://source/effects/CRTEffect.tscn" type="PackedScene" id=4]
 
 [node name="Map" type="Node2D"]
 script = ExtResource( 1 )
@@ -13,24 +14,34 @@ intro_scene_path = "res://source/screen_intro/Intro.tscn"
 
 [node name="Node" parent="Nodes" instance=ExtResource( 2 )]
 position = Vector2( 42.4264, 41.7193 )
+id = 0
 
 [node name="Node2" parent="Nodes" instance=ExtResource( 2 )]
 position = Vector2( 36.9029, 143.085 )
+id = 1
 
 [node name="Node3" parent="Nodes" instance=ExtResource( 2 )]
 position = Vector2( 90.9966, 189.755 )
+id = 2
 
 [node name="Node4" parent="Nodes" instance=ExtResource( 2 )]
 position = Vector2( 183.981, 198.593 )
+id = 3
 
 [node name="Node5" parent="Nodes" instance=ExtResource( 2 )]
 position = Vector2( 140.141, 119.044 )
+id = 4
 
 [node name="Node6" parent="Nodes" instance=ExtResource( 2 )]
 position = Vector2( 177.264, 46.2118 )
+id = 5
 
 [node name="Node7" parent="Nodes" instance=ExtResource( 2 )]
 position = Vector2( 260.349, 48.3332 )
+id = 6
 
 [node name="Node8" parent="Nodes" instance=ExtResource( 2 )]
 position = Vector2( 272.723, 134.247 )
+id = 7
+
+[node name="CRTEffect" parent="." instance=ExtResource( 4 )]

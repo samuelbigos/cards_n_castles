@@ -44,6 +44,9 @@ func _process_action(_delta):
 			_projectile.connect("on_target_reached", self, "_on_complete")
 			add_child(_projectile)
 			
+			var rand_audio = unit_data.attack_audio[Globals.rng.randi_range(0, unit_data.attack_audio.size() - 1)]
+			_owner._fire_attack_audio(rand_audio)
+			
 			# hook up signal to tell target when it's hit
 			connect("on_hit", target, "_on_ActionAttack_on_hit")
 		

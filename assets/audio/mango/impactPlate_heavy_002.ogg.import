@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/impactPlate_heavy_002.ogg-28c5fdf689841e00b2de237386f301a0.oggstr"
+
+[deps]
+
+source_file="res://assets/audio/mango/impactPlate_heavy_002.ogg"
+dest_files=[ "res://.import/impactPlate_heavy_002.ogg-28c5fdf689841e00b2de237386f301a0.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

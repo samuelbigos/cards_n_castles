@@ -18,8 +18,10 @@ enum State {
 
 """ PUBLIC """
 
-const SNAP_TIME = 0.2
+const MOVE_SNAP_TIME = 0.3
+const MOUSE_SNAP_TIME = 0.1
 const DAMAGE_FLASH_TIME = 0.1
+const MOVE_AUDIO_LOOP_TIME = 0.3
 
 signal on_turn_over
 signal on_movement_complete
@@ -44,6 +46,10 @@ var _colour
 var _damage_flashing = false
 var _damage_flash_timer = 0.0
 var _hovered = false
+var _total_snap_time
+
+var _move_audio_playing = false
+var _move_audio_loop_timer = 0.0
 
 ###########
 # METHODS #
@@ -62,11 +68,19 @@ func _process(delta):
 			emit_signal("on_unpicked", self)
 			
 	if _snap_lerp_timer > 0.0:
-		position = _lerp(_snap_lerp_from, _snap_lerp_to, _snap_lerp_timer / SNAP_TIME)
+		position = _lerp(_snap_lerp_from, _snap_lerp_to, _snap_lerp_timer / _total_snap_time)
 		_snap_lerp_timer -= delta
 		if _snap_lerp_timer <= 0.0:
 			position = _snap_lerp_to
 			emit_signal("on_movement_complete")
+			$MoveAudio.stop()
+			_move_audio_playing = false
+			
+	if _move_audio_playing:
+		_move_audio_loop_timer -= delta
+		if _move_audio_loop_timer < 0.0:
+			$MoveAudio.play()
+			_move_audio_loop_timer = MOVE_AUDIO_LOOP_TIME
 		
 	if _hovered or _sticky:
 		$Selection.visible = true
@@ -107,8 +121,10 @@ func _move_to_grid_relative(pos:Vector2):
 	if moved:
 		_snap_lerp_from = position
 		_snap_lerp_to = Grid.grid_pos_to_snapped_pos(global_pos)
-		_snap_lerp_timer = SNAP_TIME
+		_snap_lerp_timer = MOVE_SNAP_TIME
+		_total_snap_time = MOVE_SNAP_TIME
 		_face_dir(pos)
+		_fire_move_audio()
 		return true
 	else:
 		return false
@@ -123,7 +139,8 @@ func _move_to_mouse(pos:Vector2):
 	if can_move:
 		_snap_lerp_from = Grid.grid_pos_to_snapped_pos(_mouse_grid_pos_last)
 		_snap_lerp_to = Grid.grid_pos_to_snapped_pos(mouse_grid_pos)
-		_snap_lerp_timer = SNAP_TIME
+		_snap_lerp_timer = MOUSE_SNAP_TIME
+		_total_snap_time = MOUSE_SNAP_TIME
 		Grid.move(self, mouse_grid_pos.x, mouse_grid_pos.y)
 		_mouse_grid_pos_last = mouse_grid_pos	
 	
@@ -144,6 +161,13 @@ func _die():
 	# TODO: particles
 	emit_signal("on_death", self)
 	queue_free()
+	
+func _fire_move_audio():
+	_move_audio_playing = true
+	_move_audio_loop_timer = MOVE_AUDIO_LOOP_TIME
+	$MoveAudio.stop()
+	$MoveAudio.seek(0)
+	$MoveAudio.play(0)
 	
 # time between 0-1
 func _lerp(from, to, time):
@@ -172,6 +196,11 @@ func _on_ActionAttack_on_hit(action, attack_damage):
 	self.visible = false
 	_damage_flashing = true
 	_damage_flash_timer = DAMAGE_FLASH_TIME
+	
+	var rand_audio = _cached_data.hit_audio[Globals.rng.randi_range(0, _cached_data.hit_audio.size() - 1)]
+	$HitAudio.stream = rand_audio
+	#$HitAudio.play()
+	
 	_update_health()
 	
 func _face_dir(dir):
@@ -234,3 +263,11 @@ func get_team():
 func do_turn():
 	_state = State.DETERMINE_ACTION
 	$AI.reset(_game.get_all_units(), self, _cached_data)
+	
+func _fire_attack_audio(sfx):
+	$AttackAudio.stream = sfx
+	$AttackAudio.play()
+	
+func _fire_onhit_audio(sfx):
+	$HitAudio.stream = sfx
+	$HitAudio.play()

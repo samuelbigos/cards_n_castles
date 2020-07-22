@@ -1,0 +1,41 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://assets/shaders/crt.shader" type="Shader" id=1]
+[ext_resource path="res://assets/env/bg.png" type="Texture" id=2]
+[ext_resource path="res://assets/effects/CRTFrame.png" type="Texture" id=3]
+
+[sub_resource type="ShaderMaterial" id=1]
+shader = ExtResource( 1 )
+shader_param/screen_width = 960.0
+shader_param/screen_height = 720.0
+shader_param/BarrelPower = 1.05
+shader_param/color_bleeding = 1.1
+shader_param/bleeding_range_x = 1.0
+shader_param/bleeding_range_y = 1.0
+shader_param/lines_distance = 3.0
+shader_param/scan_size = 5.0
+shader_param/scanline_alpha = 0.9
+shader_param/lines_velocity = 30.0
+
+[node name="CRTEffect" type="CanvasLayer"]
+layer = 2
+
+[node name="CRTShader" type="TextureRect" parent="."]
+material = SubResource( 1 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+texture = ExtResource( 2 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CRTFrame" type="TextureRect" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+mouse_filter = 2
+texture = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}

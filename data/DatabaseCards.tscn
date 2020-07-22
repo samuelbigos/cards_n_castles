@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=36 format=2]
 
 [ext_resource path="res://data/DatabaseCards.gd" type="Script" id=1]
 [ext_resource path="res://source/projectiles/ProjectileSwordSwing.tscn" type="PackedScene" id=2]
@@ -18,6 +18,23 @@
 [ext_resource path="res://assets/cards/maa.png" type="Texture" id=16]
 [ext_resource path="res://assets/cards/cavalry.png" type="Texture" id=17]
 [ext_resource path="res://assets/cards/archer.png" type="Texture" id=18]
+[ext_resource path="res://assets/audio/sword/Socapex - new_hits_1.wav" type="AudioStream" id=19]
+[ext_resource path="res://assets/audio/sword/Socapex - new_hits_3.wav" type="AudioStream" id=20]
+[ext_resource path="res://assets/audio/sword/Socapex - new_hits_4.wav" type="AudioStream" id=21]
+[ext_resource path="res://assets/audio/sword/Socapex - Swordsmall.wav" type="AudioStream" id=22]
+[ext_resource path="res://assets/audio/sword/Socapex - Swordsmall_1.wav" type="AudioStream" id=23]
+[ext_resource path="res://assets/audio/sword/Socapex - Swordsmall_2.wav" type="AudioStream" id=24]
+[ext_resource path="res://assets/audio/sword/Socapex - Swordsmall_3.wav" type="AudioStream" id=25]
+[ext_resource path="res://assets/audio/sword/Socapex - small knock.wav" type="AudioStream" id=26]
+[ext_resource path="res://assets/audio/arrow/shoot.ogg" type="AudioStream" id=27]
+[ext_resource path="res://assets/audio/hit/Socapex - blub_hurt2.wav" type="AudioStream" id=28]
+[ext_resource path="res://assets/audio/hit/Socapex - new_hits_9.wav" type="AudioStream" id=29]
+[ext_resource path="res://assets/audio/hit/Socapex - hurt.wav" type="AudioStream" id=30]
+[ext_resource path="res://assets/audio/hit/Socapex - new_hits.wav" type="AudioStream" id=31]
+[ext_resource path="res://assets/audio/hit/Socapex - blub_hurt.wav" type="AudioStream" id=32]
+[ext_resource path="res://assets/audio/hit/Socapex - new_hits_8.wav" type="AudioStream" id=33]
+[ext_resource path="res://assets/audio/mango/impactPlate_heavy_002.ogg" type="AudioStream" id=34]
+[ext_resource path="res://assets/audio/mango/sfx_wpn_missilelaunch.wav" type="AudioStream" id=35]
 
 [node name="DatabaseCards" type="Node"]
 script = ExtResource( 1 )
@@ -30,6 +47,8 @@ initiative = 2
 attack_range = 3
 move_and_shoot = false
 projectile = ExtResource( 13 )
+attack_audio = [ ExtResource( 27 ) ]
+hit_audio = [ ExtResource( 28 ), ExtResource( 32 ), ExtResource( 30 ), ExtResource( 31 ), ExtResource( 33 ), ExtResource( 29 ) ]
 
 [node name="Cavalry" parent="." instance=ExtResource( 3 )]
 id = "cavalry"
@@ -39,6 +58,8 @@ initiative = 5
 health = 3
 move_count = 2
 projectile = ExtResource( 2 )
+attack_audio = [ ExtResource( 22 ), ExtResource( 23 ), ExtResource( 24 ), ExtResource( 25 ), ExtResource( 19 ), ExtResource( 20 ), ExtResource( 21 ), ExtResource( 26 ) ]
+hit_audio = [ ExtResource( 28 ), ExtResource( 32 ), ExtResource( 30 ), ExtResource( 31 ), ExtResource( 33 ), ExtResource( 29 ) ]
 
 [node name="Maa" parent="." instance=ExtResource( 3 )]
 id = "maa"
@@ -48,6 +69,8 @@ card_sprite = ExtResource( 16 )
 initiative = 3
 health = 3
 projectile = ExtResource( 2 )
+attack_audio = [ ExtResource( 22 ), ExtResource( 23 ), ExtResource( 24 ), ExtResource( 25 ), ExtResource( 19 ), ExtResource( 20 ), ExtResource( 21 ), ExtResource( 26 ) ]
+hit_audio = [ ExtResource( 28 ), ExtResource( 32 ), ExtResource( 30 ), ExtResource( 31 ), ExtResource( 33 ), ExtResource( 29 ) ]
 
 [node name="Mangonel" parent="." instance=ExtResource( 3 )]
 id = "mangonel"
@@ -57,6 +80,9 @@ min_attack_range = 2
 health = 3
 mango_attack = true
 projectile = ExtResource( 15 )
+attack_audio = [ ExtResource( 35 ) ]
+hit_audio = [ ExtResource( 34 ) ]
+blood = false
 
 [node name="Palisade" parent="." instance=ExtResource( 3 )]
 id = "palisade"
@@ -65,12 +91,17 @@ health = 4
 move_count = 0
 attack_count = 0
 projectile = ExtResource( 13 )
+hit_audio = [ ExtResource( 34 ) ]
+blood = false
 
 [node name="Ram" parent="." instance=ExtResource( 3 )]
 id = "ram"
 sprite = ExtResource( 5 )
 health = 6
 projectile = ExtResource( 13 )
+attack_audio = [ ExtResource( 34 ) ]
+hit_audio = [ ExtResource( 34 ) ]
+blood = false
 
 [node name="Skirmisher" parent="." instance=ExtResource( 3 )]
 id = "skirmisher"
@@ -94,3 +125,5 @@ health = 7
 move_count = 0
 attack_count = 0
 projectile = ExtResource( 13 )
+hit_audio = [ ExtResource( 34 ) ]
+blood = false

@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/Socapex - small knock.wav-941b437d7d8d688fa4cf8dba76fcc0ba.sample"
+
+[deps]
+
+source_file="res://assets/audio/sword/Socapex - small knock.wav"
+dest_files=[ "res://.import/Socapex - small knock.wav-941b437d7d8d688fa4cf8dba76fcc0ba.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

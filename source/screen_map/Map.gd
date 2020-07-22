@@ -35,12 +35,12 @@ func _ready():
 			add_child(path)
 			
 		nodes[i].modulate = Globals.palette_pale
-		nodes[i]._connect_input_event("_on_Area2D_input_event", self)
+		nodes[i].connect("on_activate", self, "on_node_activated")
 			
 	nodes[current_level].play()
 
-func _on_Area2D_input_event(viewport, event, shape_idx):
-	if event.is_action_pressed("ui_select"):
+func on_node_activated(node):
+	if node.id == PlayerData.get_current_level():
 		get_tree().change_scene(intro_scene_path)
 
 """ PUBLIC """

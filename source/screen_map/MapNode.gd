@@ -12,13 +12,21 @@ Does XXX.
 
 """ PUBLIC """
 
+signal on_activate(node)
+
+export var id = -1
+
 ###########
 # METHODS #
 ###########
 
 """ PRIVATE """
 
+func _ready():
+	pass
+
 """ PUBLIC """
 
-func _connect_input_event(function_signature, object):
-	$Area2D.connect("input_event", object, function_signature)
+func _on_Area2D_input_event(viewport, event, shape_idx):
+	if event.is_action_released("ui_select"):
+		emit_signal("on_activate", self)

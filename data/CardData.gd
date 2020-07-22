@@ -15,3 +15,6 @@ export var move_count : int = 1 # move range in cells
 export var attack_count : int = 1
 export var mango_attack : bool = false # special case for mangonel area attack
 export var projectile : PackedScene = null
+export var attack_audio = []
+export var hit_audio = []
+export var blood = true

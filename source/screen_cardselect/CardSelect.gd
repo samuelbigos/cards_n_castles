@@ -22,7 +22,7 @@ export var map_scene_path : String
 """ PRIVATE """
 
 func _ready():
-	var viewport_center = get_viewport_rect().size * 0.5
+	var viewport_center = Globals.SCREEN_SIZE * 0.5
 	var reward_level = PlayerData.get_current_level()
 	var rewards = Levels.levels[reward_level]["reward"]
 	for i in range(0, rewards.size()):

@@ -7,6 +7,8 @@ enum State {
 	RESULTS
 }
 
+const SCREEN_SIZE = Vector2(320, 240)
+
 const DEPLOY_AREA_POS = Vector2(1, 2)
 const DEPLOY_AREA_SIZE = Vector2(5, 8)
 
@@ -16,6 +18,8 @@ var palette_brown = Color("812a0d")
 var palette_teal = Color("2f7c89")
 var palette_green = Color("154b4d")
 var palette_darkergreen = Color("071c1e")
+
+var rng = RandomNumberGenerator.new()
 
 # utils
 func is_over_deploy_zone(pos):

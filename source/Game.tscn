@@ -1,7 +1,8 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://source/Unit.tscn" type="PackedScene" id=1]
 [ext_resource path="res://source/Game.gd" type="Script" id=2]
+[ext_resource path="res://assets/audio/ambient/wind1.wav" type="AudioStream" id=3]
 [ext_resource path="res://source/Player.gd" type="Script" id=4]
 [ext_resource path="res://data/DatabaseCards.tscn" type="PackedScene" id=5]
 [ext_resource path="res://source/Opponent.gd" type="Script" id=6]
@@ -23,6 +24,7 @@
 [ext_resource path="res://source/DrawGrid.gd" type="Script" id=22]
 [ext_resource path="res://source/Levels.gd" type="Script" id=23]
 [ext_resource path="res://source/gui/Widget_Popup.gd" type="Script" id=24]
+[ext_resource path="res://source/effects/CRTEffect.tscn" type="PackedScene" id=25]
 
 [node name="Game" type="Node2D"]
 script = ExtResource( 2 )
@@ -163,9 +165,15 @@ __meta__ = {
 
 [node name="BattleAutomator" type="Node2D" parent="."]
 script = ExtResource( 7 )
+
+[node name="CRTEffect" parent="." instance=ExtResource( 25 )]
+
+[node name="Ambient" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 3 )
+autoplay = true
+[connection signal="state_change" from="." to="." method="_on_Game_state_change"]
 [connection signal="state_change" from="." to="AreaHighlights" method="_on_Game_state_change"]
 [connection signal="state_change" from="." to="Opponent" method="_on_Game_state_change"]
-[connection signal="state_change" from="." to="." method="_on_Game_state_change"]
 [connection signal="state_change" from="." to="Player" method="_on_Game_state_change"]
 [connection signal="pressed" from="GUI/Widget_ToBattle/FightButton" to="." method="_on_ToBattle_pressed"]
 [connection signal="pressed" from="GUI/Widget_Popup/VBoxContainer/ResultButton" to="." method="_on_ToBattle_pressed"]

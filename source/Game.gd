@@ -36,10 +36,12 @@ func _ready():
 	VisualServer.set_default_clear_color(Globals.palette_darkgreen)
 	change_state(Globals.State.DEPLOY)
 	
-	$Player/CanvasLayer/PlayerHand.position = Vector2(get_viewport().size.x * 0.5, get_viewport().size.y)
+	$Player/CanvasLayer/PlayerHand.position = Vector2(Globals.SCREEN_SIZE.x * 0.5, Globals.SCREEN_SIZE.y)
 	
 	$Player.connect("on_all_units_dead", self, "_on_Player_on_all_units_dead")
 	$Opponent.connect("on_all_units_dead", self, "_on_Opponent_on_all_units_dead")
+	
+	Globals.rng.randomize()
 	
 func _process_results():
 	if _was_victorious:
@@ -78,6 +80,7 @@ func _on_Unit_on_picked(unit):
 	$AreaHighlights.update()
 	
 func _on_Card_on_card_picked(card_data):
+	$DrawGrid.set_visible(false)
 	$AreaHighlights.animate_deploy = true
 	$AreaHighlights._draw_deploy = true
 	$AreaHighlights.update()
@@ -88,7 +91,8 @@ func _on_Unit_on_unpicked(unit):
 	$AreaHighlights._draw_deploy = false
 	$AreaHighlights.update()
 	
-func _on_Card_on_card_unpicked(card_data):
+func _on_Card_on_card_unpicked(card_data, card):
+	$DrawGrid.set_visible(false)
 	$AreaHighlights.animate_deploy = false
 	$AreaHighlights._draw_deploy = false
 	$AreaHighlights.update()

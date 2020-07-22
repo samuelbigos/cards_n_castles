@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/mud02.ogg-c2937aebb123e687f46d90da9f32430a.oggstr"
+
+[deps]
+
+source_file="res://assets/audio/mud02.ogg"
+dest_files=[ "res://.import/mud02.ogg-c2937aebb123e687f46d90da9f32430a.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0
