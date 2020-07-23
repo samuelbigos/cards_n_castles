@@ -29,6 +29,7 @@ signal on_death(unit)
 signal on_picked(unit)
 signal on_unpicked(unit)
 
+var _id = ""
 var _game = null
 var _sticky = false
 var _mouse_grid_pos_last = Vector2()
@@ -85,7 +86,7 @@ func _process(delta):
 	if _hovered or _sticky:
 		$Selection.visible = true
 	else:
-		$Selection.visible = false			
+		$Selection.visible = false
 			
 	_damage_flash_timer -= delta
 	if _damage_flash_timer < 0.0 and _damage_flashing:
@@ -197,8 +198,8 @@ func _on_ActionAttack_on_hit(action, attack_damage):
 	_damage_flashing = true
 	_damage_flash_timer = DAMAGE_FLASH_TIME
 	
-	var rand_audio = _cached_data.hit_audio[Globals.rng.randi_range(0, _cached_data.hit_audio.size() - 1)]
-	$HitAudio.stream = rand_audio
+	#var rand_audio = _cached_data.hit_audio[Globals.rng.randi_range(0, _cached_data.hit_audio.size() - 1)]
+	#$HitAudio.stream = rand_audio
 	#$HitAudio.play()
 	
 	_update_health()
@@ -215,6 +216,7 @@ func _face_dir(dir):
 
 func init_with_data(card_data, team, game):
 	_cached_data = card_data.duplicate()
+	_id = _cached_data.id
 	_game = game
 	if team == 0:
 		_colour = Globals.palette_teal
@@ -264,10 +266,16 @@ func do_turn():
 	_state = State.DETERMINE_ACTION
 	$AI.reset(_game.get_all_units(), self, _cached_data)
 	
-func _fire_attack_audio(sfx):
+func get_unit_id():
+	return _id
+	
+func fire_attack_audio(sfx):
 	$AttackAudio.stream = sfx
 	$AttackAudio.play()
 	
-func _fire_onhit_audio(sfx):
+func fire_onhit_audio(sfx):
 	$HitAudio.stream = sfx
 	$HitAudio.play()
+
+func is_wall():
+	return _cached_data.attack_count == 0

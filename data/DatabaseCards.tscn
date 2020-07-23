@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=2]
+[gd_scene load_steps=40 format=2]
 
 [ext_resource path="res://data/DatabaseCards.gd" type="Script" id=1]
 [ext_resource path="res://source/projectiles/ProjectileSwordSwing.tscn" type="PackedScene" id=2]
@@ -35,6 +35,10 @@
 [ext_resource path="res://assets/audio/hit/Socapex - new_hits_8.wav" type="AudioStream" id=33]
 [ext_resource path="res://assets/audio/mango/impactPlate_heavy_002.ogg" type="AudioStream" id=34]
 [ext_resource path="res://assets/audio/mango/sfx_wpn_missilelaunch.wav" type="AudioStream" id=35]
+[ext_resource path="res://assets/cards/mangonel.png" type="Texture" id=36]
+[ext_resource path="res://assets/cards/skirmisher.png" type="Texture" id=37]
+[ext_resource path="res://assets/cards/spearman.png" type="Texture" id=38]
+[ext_resource path="res://assets/cards/ram.png" type="Texture" id=39]
 
 [node name="DatabaseCards" type="Node"]
 script = ExtResource( 1 )
@@ -45,7 +49,7 @@ sprite = ExtResource( 8 )
 card_sprite = ExtResource( 18 )
 initiative = 2
 attack_range = 3
-move_and_shoot = false
+health = 2
 projectile = ExtResource( 13 )
 attack_audio = [ ExtResource( 27 ) ]
 hit_audio = [ ExtResource( 28 ), ExtResource( 32 ), ExtResource( 30 ), ExtResource( 31 ), ExtResource( 33 ), ExtResource( 29 ) ]
@@ -75,7 +79,8 @@ hit_audio = [ ExtResource( 28 ), ExtResource( 32 ), ExtResource( 30 ), ExtResour
 [node name="Mangonel" parent="." instance=ExtResource( 3 )]
 id = "mangonel"
 sprite = ExtResource( 6 )
-attack_range = 5
+card_sprite = ExtResource( 36 )
+attack_range = 4
 min_attack_range = 2
 health = 3
 mango_attack = true
@@ -97,8 +102,11 @@ blood = false
 [node name="Ram" parent="." instance=ExtResource( 3 )]
 id = "ram"
 sprite = ExtResource( 5 )
+card_sprite = ExtResource( 39 )
+strong_vs = [ "palisade", "stonewall" ]
+strong_damage = 5
 health = 6
-projectile = ExtResource( 13 )
+projectile = ExtResource( 2 )
 attack_audio = [ ExtResource( 34 ) ]
 hit_audio = [ ExtResource( 34 ) ]
 blood = false
@@ -106,17 +114,26 @@ blood = false
 [node name="Skirmisher" parent="." instance=ExtResource( 3 )]
 id = "skirmisher"
 sprite = ExtResource( 10 )
+card_sprite = ExtResource( 37 )
 initiative = 2
 attack_range = 3
+strong_vs = [ "archer" ]
+strong_damage = 2
 health = 2
 projectile = ExtResource( 13 )
+attack_audio = [ ExtResource( 27 ) ]
+hit_audio = [ ExtResource( 28 ), ExtResource( 32 ), ExtResource( 30 ), ExtResource( 31 ), ExtResource( 33 ), ExtResource( 29 ) ]
 
 [node name="Spearman" parent="." instance=ExtResource( 3 )]
 id = "spearman"
 sprite = ExtResource( 11 )
-initiative = 3
+card_sprite = ExtResource( 38 )
+initiative = 2
+strong_vs = [ "cavalry" ]
+strong_damage = 3
 health = 2
 projectile = ExtResource( 2 )
+attack_audio = [ ExtResource( 19 ), ExtResource( 20 ), ExtResource( 21 ), ExtResource( 26 ), ExtResource( 22 ), ExtResource( 23 ), ExtResource( 24 ), ExtResource( 25 ) ]
 
 [node name="Stonewall" parent="." instance=ExtResource( 3 )]
 id = "stonewall"

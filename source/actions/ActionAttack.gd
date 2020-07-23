@@ -19,8 +19,12 @@ var _mango_splash_vectors = [Vector2(0.0, 0.0),
 							Vector2(-1.0, 0.0),
 							Vector2(0.0, -1.0)]
 var _mango_targets = []
+var _attack_complete = false
+var _wind_down_timer = 0.0
 
 """ PUBLIC """
+
+const ATTACK_WIND_DOWN = 0.3
 
 signal on_hit(action, attack_damage)
 
@@ -34,6 +38,13 @@ var attack_damage = 0
 
 """ PRIVATE """
 
+func _process(delta):
+	pass
+	#if _attack_complete:
+	#	_wind_down_timer -= delta
+	#	if _wind_down_timer < 0.0:
+			
+
 func _process_action(_delta):
 	if not _started_attack:
 		if unit_data.mango_attack:
@@ -45,7 +56,7 @@ func _process_action(_delta):
 			add_child(_projectile)
 			
 			var rand_audio = unit_data.attack_audio[Globals.rng.randi_range(0, unit_data.attack_audio.size() - 1)]
-			_owner._fire_attack_audio(rand_audio)
+			_owner.fire_attack_audio(rand_audio)
 			
 			# hook up signal to tell target when it's hit
 			connect("on_hit", target, "_on_ActionAttack_on_hit")
@@ -69,7 +80,10 @@ func _do_mango_attack():
 	# only trigger the complete callback on the main projectile
 	_mango_projectiles[0].connect("on_target_reached", self, "_on_complete")
 		
-func _on_complete():	
+func _on_complete():
+	_attack_complete = true
+	_wind_down_timer = ATTACK_WIND_DOWN
+	
 	emit_signal("on_hit", self, attack_damage)
 	disconnect("on_hit", target, "_on_ActionAttsack_on_hit")
 	for unit in _mango_targets:
@@ -81,5 +95,5 @@ func _on_complete():
 	for projectile in _mango_projectiles:
 		projectile.queue_free()
 	._on_complete()
-	
+		
 """ PUBLIC """

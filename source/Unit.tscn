@@ -29,7 +29,7 @@ shape = SubResource( 1 )
 visible = false
 texture = ExtResource( 3 )
 
-[node name="AI" type="Node" parent="."]
+[node name="AI" type="Node2D" parent="."]
 script = ExtResource( 4 )
 move_action_script = ExtResource( 5 )
 attack_action_script = ExtResource( 6 )

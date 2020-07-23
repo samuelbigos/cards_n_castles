@@ -39,7 +39,11 @@ func _on_Game_state_change(_from, to):
 				
 func _on_Unit_on_death(unit):
 	_units.erase(unit)
-	if _units.size() == 0:
+	var non_wall_units = 0
+	for unit in _units:
+		if unit._cached_data.attack_count > 0:
+			non_wall_units += 1
+	if non_wall_units == 0:
 		emit_signal("on_all_units_dead")
 	
 func _spawn_unit(pos, card_data):

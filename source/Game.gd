@@ -62,6 +62,9 @@ func _on_Game_state_change(_from, to):
 		Globals.State.RESULTS:
 			$BattleAutomator.end()
 			_process_results()
+			
+func _process(delta):
+	pass
 	
 func _on_ToBattle_pressed():
 	if $GUI/Widget_ToBattle.visible:
@@ -69,6 +72,8 @@ func _on_ToBattle_pressed():
 		change_state(Globals.State.BATTLE)
 	
 func _on_Unit_on_death(unit):
+	if not unit._cached_data.blood:
+		return
 	var blood = blood_scene.instance()
 	blood.position = unit.position
 	$Env.add_child(blood)
@@ -90,6 +95,9 @@ func _on_Unit_on_unpicked(unit):
 	$AreaHighlights.animate_deploy = false
 	$AreaHighlights._draw_deploy = false
 	$AreaHighlights.update()
+	
+	if _state == Globals.State.BATTLE:
+		$BattleAutomator.add_unit(unit)
 	
 func _on_Card_on_card_unpicked(card_data, card):
 	$DrawGrid.set_visible(false)

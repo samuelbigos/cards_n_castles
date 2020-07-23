@@ -12,6 +12,7 @@ Base class for unit actions.
 
 var _owner = null
 var _processing = false
+var _fired = false
 
 """ PUBLIC """
 
@@ -31,7 +32,9 @@ func _process_action(_delta): # virtual
 	pass
 	
 func _on_complete():
-	emit_signal("on_action_complete", self)
+	if not _fired:
+		emit_signal("on_action_complete", self)
+		_fired = true
 	
 """ PUBLIC """
 

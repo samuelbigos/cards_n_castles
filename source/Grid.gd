@@ -16,7 +16,7 @@ var _astar
 
 """ PUBLIC """
 
-const GRID_SIZE = Vector2(32, 32)
+const GRID_SIZE = Vector2(16, 16)
 const CELL_SIZE = Vector2(16, 16)
 const CELL_PADDING = 4
 	
@@ -57,13 +57,10 @@ func get_astar_path(from:Vector2, to:Vector2):
 	_astar.set_point_disabled(_grid_astar_id_map[to_grid], false)
 	var from_id = _grid_astar_id_map[from_grid]
 	var to_id = _grid_astar_id_map[to_grid]
-	var id_path = _astar.get_id_path(from_id, to_id)
+	var path = _astar.get_point_path(from_id, to_id)
 	_astar.set_point_disabled(_grid_astar_id_map[from_grid], true)
-	_astar.set_point_disabled(_grid_astar_id_map[to_grid], true)
-	if id_path.size() < 2:
-		return to
-	var first_id_pos = _astar.get_point_position(id_path[1])
-	return grid_pos_to_snapped_pos(Vector2(first_id_pos.x, first_id_pos.y))
+	_astar.set_point_disabled(_grid_astar_id_map[to_grid], true)		
+	return path
 
 func get_at(x:int, y:int):
 	return _grid[x][y]

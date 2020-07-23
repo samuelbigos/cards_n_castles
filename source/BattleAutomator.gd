@@ -81,5 +81,8 @@ func begin(units):
 	if units.size() > 0:
 		_current_unit = _units[0]
 		
+func add_unit(unit):
+	_units.push_back(unit)
+		
 func end():
 	_running = false
