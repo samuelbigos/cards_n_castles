@@ -21,11 +21,11 @@ var _deck = [ "maa", "maa", "archer" ]
 # 4
 #var _deck = [ "maa", "maa", "archer", "cavalry", "spearman", "cavalry", "archer" ]
 # 5
-#var _deck = [ "maa", "maa", "archer", "cavalry", "spearman", "cavalry", "mangonel" ]
+#var _deck = [ "maa", "maa", "archer", "cavalry", "spearman", "cavalry", "mangonel", "archer" ]
 # 6
-#var _deck = [ "maa", "maa", "archer", "cavalry", "spearman", "cavalry", "mangonel", "ram" ]
+#var _deck = [ "maa", "maa", "archer", "cavalry", "spearman", "cavalry", "mangonel", "ram", "archer" ]
 # 7
-#var _deck = [ "maa", "maa", "archer", "cavalry", "spearman", "cavalry", "mangonel", "ram", "skirm" ]
+#var _deck = [ "maa", "maa", "archer", "cavalry", "spearman", "cavalry", "mangonel", "ram", "skirm", "archer" ]
 
 """ PUBLIC """
 

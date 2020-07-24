@@ -53,7 +53,7 @@ func _ready():
 				grass.frames = grass_texture[_rng.randi_range(0, grass_texture.size() - 1)]
 				grass.playing = false
 				grass.flip_h = _rng.randi_range(0, 1)
-				grass.modulate = Globals.palette_green
+				grass.modulate = Globals.palette_grass
 				var random_adjust = Vector2(_rng.randi_range(-0.5 / density, 0.5 / density),
 											_rng.randi_range(-0.5 / density, 0.5 / density))
 				grass.position = Vector2(x / density, y / density)
@@ -66,7 +66,7 @@ func _ready():
 				var road = Sprite.new()
 				road.texture = road_texture[_rng.randi_range(0, road_texture.size() - 1)]
 				road.flip_h = _rng.randi_range(0, 1)
-				road.modulate = Globals.palette_darkergreen
+				road.modulate = Globals.palette_dirt
 				var random_adjust = Vector2(_rng.randi_range(-0.5 / density, 0.5 / density),
 											_rng.randi_range(-0.5 / density, 0.5 / density))
 				road.position = Vector2(x / density, y / density)
@@ -74,7 +74,7 @@ func _ready():
 				add_child(road)
 		
 	$BG.scale = Globals.SCREEN_SIZE
-	$BG.modulate = Globals.palette_darkgreen
+	$BG.modulate = Globals.palette_ground
 	
 func _process(delta):
 	_wind_timer -= delta

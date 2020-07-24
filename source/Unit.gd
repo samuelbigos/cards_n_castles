@@ -59,7 +59,7 @@ var _move_audio_loop_timer = 0.0
 """ PRIVATE """
 
 func _ready():
-	$Sprite.modulate = Globals.palette_pale
+	pass
 		
 func _process(delta):
 	if _sticky:
@@ -177,7 +177,7 @@ func _lerp(from, to, time):
 func _on_Area2D_mouse_entered():
 	if _process_input:
 		_hovered = true
-		$Selection.modulate = Globals.palette_pale
+		#$Selection.modulate = Globals.palette_pale
 
 func _on_Area2D_mouse_exited():
 	if _process_input:
@@ -218,16 +218,20 @@ func init_with_data(card_data, team, game):
 	_cached_data = card_data.duplicate()
 	_id = _cached_data.id
 	_game = game
+	var _color_accent
 	if team == 0:
-		_colour = Globals.palette_teal
+		_colour = Globals.palette_player
+		_color_accent = Globals.palette_player_accent
 	else:
-		_colour = Globals.palette_brown
+		_colour = Globals.palette_enemy
+		_color_accent = Globals.palette_enemy_accent
 	
 	$Sprite.texture = _cached_data.sprite
+	$Sprite.modulate = _colour
 	$SpriteAccent.texture = _cached_data.sprite_accent
-	$SpriteAccent.modulate = _colour
+	$SpriteAccent.modulate = _color_accent
 	for pip in $Health.get_children():
-		pip.modulate = _colour
+		pip.modulate = _color_accent
 		
 	_max_health = _cached_data.health
 	_health = _cached_data.health

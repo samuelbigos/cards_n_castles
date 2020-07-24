@@ -33,7 +33,7 @@ func _ready():
 	$Player.setup(self)
 	$Opponent.setup(self)
 		
-	VisualServer.set_default_clear_color(Globals.palette_darkgreen)
+	#VisualServer.set_default_clear_color(Globals.palette_dirt)
 	change_state(Globals.State.DEPLOY)
 	
 	$Player/CanvasLayer/PlayerHand.position = Vector2(Globals.SCREEN_SIZE.x * 0.5, Globals.SCREEN_SIZE.y)
@@ -98,6 +98,9 @@ func _on_Unit_on_unpicked(unit):
 	
 	if _state == Globals.State.BATTLE:
 		$BattleAutomator.add_unit(unit)
+		
+	if _state == Globals.State.DEPLOY:
+		$GUI/Widget_ToBattle.visible = true
 	
 func _on_Card_on_card_unpicked(card_data, card):
 	$DrawGrid.set_visible(false)

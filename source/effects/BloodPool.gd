@@ -28,5 +28,5 @@ func _ready():
 	_rng.randomize()
 	var blood = _rng.randi_range(0, blood_images.size() - 1)
 	texture = blood_images[blood]
-	modulate = Globals.palette_brown
+	modulate = Globals.palette_blood
 	flip_h = _rng.randf() > 0.5

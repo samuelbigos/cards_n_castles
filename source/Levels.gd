@@ -98,13 +98,13 @@ const levels = [
 	{
 		"pre-text": "We made it to the keep! One more victory and France is ours! FOR ENGLAND!",
 		"opponent": [	[ null, 	"stonewall","stonewall","stonewall","stonewall","stonewall",		null],
-						[ null, 	"stonewall","skirm", 	"archer", 	"skirm",	"stonewall", 		null ],
-						[ null,		"stonewall", "archer", 	"skirm",	"archer", 	"stonewall", 		null ],
+						[ null, 	"stonewall","maa", 	"skirm", 	"maa",	"stonewall", 		null ],
+						[ null,		"stonewall", "archer", 	"maa",	"archer", 	"stonewall", 		null ],
 						[ null, 	"stonewall", "spearman","mangonel",	"spearman",	"stonewall",		null ],
-						[ null, 	"stonewall", "maa", 	"cavalry",	"maa", 		"stonewall", 		null ],
+						[ null, 	"stonewall", null, 		"archer",		null, 		"stonewall", 		null ],
 						[ null, 	"stonewall", "maa",		"cavalry", 	 "maa",		"stonewall",		null ],
 						[ "stonewall", 	"stonewall", "cavalry", "maa", 		"cavalry", 	"stonewall",		"stonewall"]],
-		"post-text": "We've breached the defenses and captured a unit of enemy skirmishers! These troops do bonus damage to archers.",
-		"reward": [ "skirm" ]
+		"post-text": "You rescued the princess! YOU WON THE GAME! Thank you for playing :)",
+		"reward": []
 	},
 ]

@@ -71,6 +71,7 @@ CardScene = ExtResource( 20 )
 [node name="GUI" type="CanvasLayer" parent="."]
 
 [node name="Widget_ToBattle" type="CenterContainer" parent="GUI"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = -0.314987
@@ -172,8 +173,8 @@ script = ExtResource( 7 )
 stream = ExtResource( 3 )
 autoplay = true
 [connection signal="state_change" from="." to="AreaHighlights" method="_on_Game_state_change"]
-[connection signal="state_change" from="." to="Opponent" method="_on_Game_state_change"]
 [connection signal="state_change" from="." to="Player" method="_on_Game_state_change"]
+[connection signal="state_change" from="." to="Opponent" method="_on_Game_state_change"]
 [connection signal="state_change" from="." to="." method="_on_Game_state_change"]
 [connection signal="pressed" from="GUI/Widget_ToBattle/FightButton" to="." method="_on_ToBattle_pressed"]
 [connection signal="pressed" from="GUI/Widget_Popup/VBoxContainer/ResultButton" to="." method="_on_ToBattle_pressed"]

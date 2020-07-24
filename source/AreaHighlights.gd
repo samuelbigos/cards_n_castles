@@ -43,10 +43,10 @@ func _draw():
 		var rect_size = Globals.DEPLOY_AREA_SIZE * (Grid.CELL_SIZE + Vector2(Grid.CELL_PADDING, Grid.CELL_PADDING))
 		rect_size -= Vector2(Grid.CELL_PADDING, Grid.CELL_PADDING)
 		rect_size += Vector2(Grid.CELL_PADDING, Grid.CELL_PADDING)
-		_draw_dashed_line(rect_pos + Vector2(_draw_offset_deploy, 0.0), rect_pos + Vector2(rect_size.x, 0.0), Globals.palette_pale, 1, 2)
-		_draw_dashed_line(rect_pos + Vector2(0.0, _draw_offset_deploy), rect_pos + Vector2(0.0, rect_size.y), Globals.palette_pale, 1, 2)
-		_draw_dashed_line(rect_pos + Vector2(rect_size.x, _draw_offset_deploy), rect_pos + Vector2(rect_size.x, rect_size.y), Globals.palette_pale, 1, 2)
-		_draw_dashed_line(rect_pos + Vector2(_draw_offset_deploy, rect_size.y), rect_pos + Vector2(rect_size.x, rect_size.y), Globals.palette_pale, 1, 2)
+		_draw_dashed_line(rect_pos + Vector2(_draw_offset_deploy, 0.0), rect_pos + Vector2(rect_size.x, 0.0), Globals.palette_grid, 1, 2)
+		_draw_dashed_line(rect_pos + Vector2(0.0, _draw_offset_deploy), rect_pos + Vector2(0.0, rect_size.y), Globals.palette_grid, 1, 2)
+		_draw_dashed_line(rect_pos + Vector2(rect_size.x, _draw_offset_deploy), rect_pos + Vector2(rect_size.x, rect_size.y), Globals.palette_grid, 2)
+		_draw_dashed_line(rect_pos + Vector2(_draw_offset_deploy, rect_size.y), rect_pos + Vector2(rect_size.x, rect_size.y), Globals.palette_grid, 1, 2)
 		
 func _draw_dashed_line(from, to, color, width, dash_length = 5):
 	width = 2

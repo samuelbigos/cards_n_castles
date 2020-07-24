@@ -19,7 +19,7 @@ Is a projectile.
 """ PRIVATE """
 
 func _ready():
-	$AnimatedSprite.modulate = Globals.palette_pale
+	$AnimatedSprite.modulate = Globals.palette_player
 	
 func _process(delta):
 	pass
