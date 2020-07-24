@@ -80,9 +80,10 @@ hit_audio = [ ExtResource( 28 ), ExtResource( 32 ), ExtResource( 30 ), ExtResour
 id = "mangonel"
 sprite = ExtResource( 6 )
 card_sprite = ExtResource( 36 )
+initiative = 2
 attack_range = 4
 min_attack_range = 2
-health = 3
+health = 2
 mango_attack = true
 projectile = ExtResource( 15 )
 attack_audio = [ ExtResource( 35 ) ]
@@ -92,7 +93,7 @@ blood = false
 [node name="Palisade" parent="." instance=ExtResource( 3 )]
 id = "palisade"
 sprite = ExtResource( 12 )
-health = 4
+health = 3
 move_count = 0
 attack_count = 0
 projectile = ExtResource( 13 )
@@ -103,6 +104,7 @@ blood = false
 id = "ram"
 sprite = ExtResource( 5 )
 card_sprite = ExtResource( 39 )
+initiative = 3
 strong_vs = [ "palisade", "stonewall" ]
 strong_damage = 5
 health = 6
@@ -112,7 +114,7 @@ hit_audio = [ ExtResource( 34 ) ]
 blood = false
 
 [node name="Skirmisher" parent="." instance=ExtResource( 3 )]
-id = "skirmisher"
+id = "skirm"
 sprite = ExtResource( 10 )
 card_sprite = ExtResource( 37 )
 initiative = 2

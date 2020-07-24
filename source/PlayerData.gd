@@ -9,7 +9,7 @@ Stores player data
 
 """ PRIVATE """
 
-var _current_level = 3
+var _current_level = 7
 # 0
 #var _deck = [ "maa", "maa" ]
 # 1
@@ -17,9 +17,15 @@ var _current_level = 3
 # 2
 #var _deck = [ "maa", "maa", "archer", "cavalry" ]
 # 3
-var _deck = [ "maa", "maa", "archer", "cavalry", "spearman" ]
+#var _deck = [ "maa", "maa", "archer", "cavalry", "spearman" ]
 # 4
-#var _deck = [ "maa" ]
+#var _deck = [ "maa", "maa", "archer", "cavalry", "spearman", "cavalry" ]
+# 5
+#var _deck = [ "maa", "maa", "archer", "cavalry", "spearman", "cavalry", "mangonel" ]
+# 6
+#var _deck = [ "maa", "maa", "archer", "cavalry", "spearman", "cavalry", "mangonel", "ram" ]
+# 7
+var _deck = [ "maa", "maa", "archer", "cavalry", "spearman", "cavalry", "mangonel", "ram", "skirm" ]
 
 """ PUBLIC """
 

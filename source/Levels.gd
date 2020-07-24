@@ -48,24 +48,63 @@ const levels = [
 		"opponent": [	[ null, 		null, 		null, 		null, 		null, 		null, 		null ],
 						[ null, 		null, 		null, 		null, 		null, 		null, 		null ],
 						[ null, 		"palisade", "palisade", "palisade", "palisade",	"palisade",	null ],
-						[ "palisade", 	null, 		"archer",	"maa", 		"archer",	null, 		"palisade" ],
-						[ "palisade", 	null, 		null, 		null, 		null, 		null, 		"palisade" ],
-						[ "palisade", 	null, 		null, 		null, 		null, 		null, 		"palisade" ],
-						[ "palisade", 	null, 		null, 		null, 		null, 		null, 		"palisade" ]],
+						[ null, 		"palisade", "archer",	"maa", 		"archer",	"palisade", 		null ],
+						[ null, 		"palisade", null, 		null, 		null, 		"palisade", 		null ],
+						[ null, 		"palisade", null, 		null, 		null, 		"palisade", 		null ],
+						[ null,  		"palisade", null, 		null, 		null, 		"palisade", 		null ]],
 		"post-text": "Great work, commander. Those static wooden palisades stood no chance!",
 		"reward": [ "spearman", "archer", "cavalry", "maa" ]
 	},
 	#4
 	{
-		"pre-text": "The town ahead is fortified with palisade walls. These will provide an obstacle for our troops, but I'm sure we'll be able to punch through.",
-		"opponent": [	[ null, 		null, 		null, 		"archer", 		null, 		null, 		null ],
+		"pre-text": "Scouts report a strange sort of siege engine in the village up ahead. We need to take it!",
+		"opponent": [	[ null, 		"palisade",	null,		"maa",		null, 		"palisade",	null],
+						[ null, 		null, 		"maa", 		null, 		"maa", 		null, 		null ],
+						[ null,			null, 		null, "mangonel",	null, 		null, 		null ],
+						[ null, 		null, 		null, 		null, 		null,		null,		null ],
+						[ null, 		null, 		null, 		null,		null, 		null, 		null ],
 						[ null, 		null, 		null, 		null, 		null, 		null, 		null ],
+						[ "cavalry", 	null, 		null, 		null, 		null, 		null, 		null ]],
+		"post-text": "It appears to do damage in a wide area, though it can't attack units that are too close. With proper placement, this could turn even the toughest battles in our favour!",
+		"reward": [ "mangonel" ]
+	},
+	#5
+	{
+		"pre-text": "Before we take the capital we'll need an engine to break through the outer walls. Our patrol reports such a machine at an outpost nearby, we must make haste!",
+		"opponent": [	[ null, 		null,		null,		null,		null, 		null,		null],
 						[ null, 		null, 		null, 		null, 		null, 		null, 		null ],
-						[ null, 		null, 		null, 		null, 		null, 		null, 		null ],
-						[ null, 		null, 		null, 		null, 		null, 		null, 		null ],
-						[ null, 		null, 		null, 		null, 		null, 		null, 		null ],
-						[ null, 		null, 		null, 		null, 		null, 		null, 		null ]],
-		"post-text": "Great work, commander. Those static wooden palisades stood no chance!",
-		"reward": [ "spearman", "archer", "cavalry", "maa" ]
+						[ null,			null, 		null, 		null,		null, 		null, 		null ],
+						[ null, 		null, 		null, 		"palisade",	null,		null,		null ],
+						[ null, 		null, 		"palisade", "archer",	"palisade", null, 		null ],
+						[ null, 		"palisade",	"archer",	"spearman", "archer",	"palisade", null ],
+						[ "palisade", 	"archer", 	null, 		"ram", 		null, 		"archer",	"palisade" ]],
+		"post-text": "This will help us punch through the stone walls of the French capital!",
+		"reward": [ "ram" ]
+	},
+	#6
+	{
+		"pre-text": "We've finally made it to the capital, time to take her for England! Be sure to make use of our new siege equipment to break through the outer defenses.",
+		"opponent": [	[ "stonewall", 	"stonewall","stonewall","stonewall","stonewall","stonewall","stonewall"],
+						[ "stonewall", 		"archer", 	null, 		"archer",	null, 		"archer", 	"stonewall" ],
+						[ "stonewall",		null, 		null, 		null,		null, 		null, 		"stonewall" ],
+						[ "stonewall", 		null, 		"maa", 		null,		"spearman",	null,		"stonewall" ],
+						[ "stonewall", 		null, 		null, 		"cavalry",	null, 		null, 		"stonewall" ],
+						[ "stonewall", 		null,		"skirm",	null, 	 	"skirm",	null,		"stonewall" ],
+						[ "stonewall", 		null, 		null, 		"maa", 		null, 		null,		"stonewall"]],
+		"post-text": "We've breached the defenses and captured a unit of enemy skirmishers! These troops do bonus damage to archers.",
+		"reward": [ "skirm" ]
+	},
+	#7
+	{
+		"pre-text": "We made it to the keep! One more victory and France is ours! FOR ENGLAND!",
+		"opponent": [	[ null, 	"stonewall","stonewall","stonewall","stonewall","stonewall",		null],
+						[ null, 	"stonewall","skirm", 	"archer", 	"skirm",	"stonewall", 		null ],
+						[ null,		"stonewall", "archer", 	"skirm",	"archer", 	"stonewall", 		null ],
+						[ null, 	"stonewall", "spearman","mangonel",	"spearman",	"stonewall",		null ],
+						[ null, 	"stonewall", "maa", 	"cavalry",	"maa", 		"stonewall", 		null ],
+						[ null, 	"stonewall", "maa",		"cavalry", 	 "maa",		"stonewall",		null ],
+						[ "stonewall", 	"stonewall", "cavalry", "maa", 		"cavalry", 	"stonewall",		"stonewall"]],
+		"post-text": "We've breached the defenses and captured a unit of enemy skirmishers! These troops do bonus damage to archers.",
+		"reward": [ "skirm" ]
 	},
 ]

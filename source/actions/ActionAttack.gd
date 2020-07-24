@@ -68,6 +68,10 @@ func _do_mango_attack():
 		var projectile = unit_data.projectile.instance()
 		var grid_pos = Grid.pos_to_grid_pos(target.position)
 		grid_pos += _mango_splash_vectors[i]
+		if grid_pos.x >= Grid.GRID_SIZE.x:
+			continue
+		if grid_pos.y >= Grid.GRID_SIZE.y:
+			continue
 		projectile.setup(_owner.position, Grid.grid_pos_to_snapped_pos(grid_pos))
 		add_child(projectile)
 		_mango_projectiles.append(projectile)
