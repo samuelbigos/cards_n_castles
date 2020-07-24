@@ -76,6 +76,9 @@ func _do_mango_attack():
 		add_child(projectile)
 		_mango_projectiles.append(projectile)
 		
+		var rand_audio = unit_data.attack_audio[Globals.rng.randi_range(0, unit_data.attack_audio.size() - 1)]
+		_owner.fire_attack_audio(rand_audio)
+		
 		var mango_target = Grid.get_at(grid_pos.x, grid_pos.y)
 		if mango_target:
 			connect("on_hit", mango_target, "_on_ActionAttack_on_hit")
