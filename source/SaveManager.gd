@@ -1,7 +1,7 @@
 extends Node
 
 const SaveGame = preload('res://source/SaveGame.gd')
-var SAVE_FOLDER = "res://user/save"
+var SAVE_FOLDER = "user://savegame.save"
 var SAVE_FORMAT = "save_%03d.tres"
 
 func _ready():
