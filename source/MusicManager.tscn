@@ -1,0 +1,45 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://source/MusicManager.gd" type="Script" id=1]
+[ext_resource path="res://assets/music/battle/Komiku_-_06_-_Get_Ready.ogg" type="AudioStream" id=3]
+[ext_resource path="res://assets/music/battle/Komiku_-_07_-_Welcome_to_the_machine.ogg" type="AudioStream" id=4]
+[ext_resource path="res://assets/music/battle/Komiku_-_02_-_We_need_a_plan.ogg" type="AudioStream" id=5]
+[ext_resource path="res://assets/music/battle/Komiku_-_36_-_Intensive_puzzle_resolution.ogg" type="AudioStream" id=6]
+[ext_resource path="res://assets/music/battle/Komiku_-_62_-_The_Challenge.ogg" type="AudioStream" id=7]
+[ext_resource path="res://assets/music/battle/Komiku_-_12_-_We_have_to_do_something.ogg" type="AudioStream" id=8]
+[ext_resource path="res://assets/music/battle/Komiku_-_61_-_A_maze_that_smells_fruits.ogg" type="AudioStream" id=9]
+
+[node name="MusicManager" type="Node"]
+script = ExtResource( 1 )
+
+[node name="Battle" type="Node" parent="."]
+
+[node name="Track2" type="AudioStreamPlayer" parent="Battle"]
+stream = ExtResource( 3 )
+volume_db = -3.0
+
+[node name="Track3" type="AudioStreamPlayer" parent="Battle"]
+stream = ExtResource( 4 )
+volume_db = -3.0
+
+[node name="Track7" type="AudioStreamPlayer" parent="Battle"]
+stream = ExtResource( 9 )
+volume_db = -3.0
+
+[node name="Menu" type="Node" parent="."]
+
+[node name="Track4" type="AudioStreamPlayer" parent="Menu"]
+stream = ExtResource( 8 )
+volume_db = -5.0
+
+[node name="Track1" type="AudioStreamPlayer" parent="Menu"]
+stream = ExtResource( 5 )
+volume_db = -5.0
+
+[node name="Track8" type="AudioStreamPlayer" parent="Menu"]
+stream = ExtResource( 7 )
+volume_db = -5.0
+
+[node name="Track5" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 6 )
+volume_db = -3.0

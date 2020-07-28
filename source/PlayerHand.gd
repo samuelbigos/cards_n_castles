@@ -49,18 +49,43 @@ func _on_Card_on_card_unpicked(card_data, card):
 func _sort_by_x(a, b):
 	return a.position.x < b.position.x
 	
+func _on_Unit_on_unit_to_card(unit, card_data):
+	var card = _add_card(card_data)
+	card.set_as_picked()
+	
+func _add_card(card_data):
+	var card_instance = CardScene.instance()
+	card_instance.setup(card_data)
+	card_instance.connect("on_card_picked", _player._game, "_on_Card_on_card_picked")
+	card_instance.connect("on_card_unpicked", _player, "_on_Card_on_card_unpicked")
+	card_instance.connect("on_card_force_deploy", _player, "_on_Card_on_card_force_deploy")
+	card_instance.connect("on_card_unpicked", _player._game, "_on_Card_on_card_unpicked")
+	card_instance.connect("on_card_picked", self, "_on_Card_on_card_picked")
+	card_instance.connect("on_card_unpicked", self, "_on_Card_on_card_unpicked")
+	add_child(card_instance)
+	_cards.append(card_instance)
+	return card_instance
+	
+func _on_Game_state_change(from, to):
+	match to:
+		Globals.State.DEPLOY:
+			self.visible = true
+			
+	match from:
+		Globals.State.DEPLOY:
+			self.visible = false
+	
 """ PUBLIC """
 
 func setup(cards, player): # array of CardData
 	_player = player
-	
 	for card in cards:
-		var card_instance = CardScene.instance()
-		card_instance.setup(card)
-		card_instance.connect("on_card_picked", _player._game, "_on_Card_on_card_picked")
-		card_instance.connect("on_card_unpicked", _player, "_on_Card_on_card_unpicked")
-		card_instance.connect("on_card_unpicked", _player._game, "_on_Card_on_card_unpicked")
-		card_instance.connect("on_card_picked", self, "_on_Card_on_card_picked")
-		card_instance.connect("on_card_unpicked", self, "_on_Card_on_card_unpicked")
-		add_child(card_instance)
-		_cards.append(card_instance)
+		_add_card(card)
+		
+func deploy(grid_pos, card_id):
+	for card in _cards:
+		if card._card_data.id != card_id:
+			continue
+		
+		card.deploy(grid_pos)
+		break

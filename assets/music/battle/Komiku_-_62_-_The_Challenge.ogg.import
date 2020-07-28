@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/Komiku_-_62_-_The_Challenge.ogg-838f56e39e4fe3f1b16a7f01254c63d7.oggstr"
+
+[deps]
+
+source_file="res://assets/music/battle/Komiku_-_62_-_The_Challenge.ogg"
+dest_files=[ "res://.import/Komiku_-_62_-_The_Challenge.ogg-838f56e39e4fe3f1b16a7f01254c63d7.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

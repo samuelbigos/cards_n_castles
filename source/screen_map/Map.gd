@@ -41,6 +41,9 @@ func _ready():
 		nodes[i].connect("on_activate", self, "on_node_activated")
 			
 	nodes[current_level].play()
+	
+	if not MusicManager.is_playing():
+		MusicManager.play_menu()
 
 func on_node_activated(node):
 	if node.id == PlayerData.get_current_level():

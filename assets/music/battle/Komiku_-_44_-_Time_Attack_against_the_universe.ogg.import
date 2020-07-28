@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/Komiku_-_44_-_Time_Attack_against_the_universe.ogg-af780605f0bff72d4a22cb61da6a906f.oggstr"
+
+[deps]
+
+source_file="res://assets/music/battle/Komiku_-_44_-_Time_Attack_against_the_universe.ogg"
+dest_files=[ "res://.import/Komiku_-_44_-_Time_Attack_against_the_universe.ogg-af780605f0bff72d4a22cb61da6a906f.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

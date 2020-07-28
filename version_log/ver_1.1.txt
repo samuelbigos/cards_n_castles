@@ -1,0 +1,9 @@
+- Added save game system so progress is saved over multiple sessions.
+- Added music that can be turned off in the main menu.
+- Fixed cases where units can be deployed on top of each other, which can cause units to not act in battle.
+- Changed card deploy behaviour for usability, card will now transform into unit when it's dragged over the deploy zone, and vice-versa, and be 'dropped' when mouse is released.
+- Fixed blurred spearman and ram card textures.
+- Added retry button during battle.
+- Disabled the ability to play cards during a battle, since it was never truly intended and has issues. It is not required to complete the game and does not provide a significant strategical advantage.
+- Removed option to pick Militia after first battle since it sets up for much harder following battles.
+- Hopefully no new bugs introduced!

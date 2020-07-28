@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/Komiku_-_61_-_A_maze_that_smells_fruits.ogg-4cf7d4565d99846e1ef454e132a3fc96.oggstr"
+
+[deps]
+
+source_file="res://assets/music/battle/Komiku_-_61_-_A_maze_that_smells_fruits.ogg"
+dest_files=[ "res://.import/Komiku_-_61_-_A_maze_that_smells_fruits.ogg-4cf7d4565d99846e1ef454e132a3fc96.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

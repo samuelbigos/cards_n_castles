@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=2]
+[gd_scene load_steps=28 format=2]
 
 [ext_resource path="res://source/Unit.tscn" type="PackedScene" id=1]
 [ext_resource path="res://source/Game.gd" type="Script" id=2]
@@ -25,6 +25,8 @@
 [ext_resource path="res://source/Levels.gd" type="Script" id=23]
 [ext_resource path="res://source/gui/Widget_Popup.gd" type="Script" id=24]
 [ext_resource path="res://source/effects/CRTEffect.tscn" type="PackedScene" id=25]
+[ext_resource path="res://source/MusicManager.tscn" type="PackedScene" id=26]
+[ext_resource path="res://assets/gui/retry.png" type="Texture" id=27]
 
 [node name="Game" type="Node2D"]
 script = ExtResource( 2 )
@@ -162,6 +164,21 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Retry" type="Button" parent="GUI"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -29.0
+margin_top = 2.0
+margin_right = 5.0
+margin_bottom = 24.0
+focus_mode = 0
+enabled_focus_mode = 0
+icon = ExtResource( 27 )
+flat = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="DatabaseCards" parent="." instance=ExtResource( 5 )]
 
 [node name="BattleAutomator" type="Node2D" parent="."]
@@ -172,9 +189,15 @@ script = ExtResource( 7 )
 [node name="Ambient" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 3 )
 autoplay = true
-[connection signal="state_change" from="." to="AreaHighlights" method="_on_Game_state_change"]
+
+[node name="MusicManager" parent="." instance=ExtResource( 26 )]
 [connection signal="state_change" from="." to="Opponent" method="_on_Game_state_change"]
-[connection signal="state_change" from="." to="Player" method="_on_Game_state_change"]
 [connection signal="state_change" from="." to="." method="_on_Game_state_change"]
+[connection signal="state_change" from="." to="Player" method="_on_Game_state_change"]
+[connection signal="state_change" from="." to="AreaHighlights" method="_on_Game_state_change"]
+[connection signal="state_change" from="." to="Player/CanvasLayer/PlayerHand" method="_on_Game_state_change"]
 [connection signal="pressed" from="GUI/Widget_ToBattle/FightButton" to="." method="_on_ToBattle_pressed"]
 [connection signal="pressed" from="GUI/Widget_Popup/VBoxContainer/ResultButton" to="." method="_on_ToBattle_pressed"]
+[connection signal="mouse_entered" from="GUI/Retry" to="." method="_on_Retry_mouse_entered"]
+[connection signal="mouse_exited" from="GUI/Retry" to="." method="_on_Retry_mouse_exited"]
+[connection signal="pressed" from="GUI/Retry" to="." method="_on_Retry_pressed"]

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/Komiku_-_02_-_We_need_a_plan.ogg-0ec887b835a08853c8218dfd8eebfc17.oggstr"
+
+[deps]
+
+source_file="res://assets/music/battle/Komiku_-_02_-_We_need_a_plan.ogg"
+dest_files=[ "res://.import/Komiku_-_02_-_We_need_a_plan.ogg-0ec887b835a08853c8218dfd8eebfc17.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

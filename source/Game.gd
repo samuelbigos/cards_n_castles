@@ -37,11 +37,14 @@ func _ready():
 	change_state(Globals.State.DEPLOY)
 	
 	$Player/CanvasLayer/PlayerHand.position = Vector2(Globals.SCREEN_SIZE.x * 0.5, Globals.SCREEN_SIZE.y)
+	$GUI/Retry.modulate = Globals.palette_player
 	
 	$Player.connect("on_all_units_dead", self, "_on_Player_on_all_units_dead")
 	$Opponent.connect("on_all_units_dead", self, "_on_Opponent_on_all_units_dead")
 	
 	Globals.rng.randomize()
+	
+	#_load_begin_battle_state()
 	
 func _process_results():
 	if _was_victorious:
@@ -54,17 +57,31 @@ func _process_results():
 func _on_Game_state_change(_from, to):
 	match to:
 		Globals.State.DEPLOY:
-			pass
+			if not MusicManager.is_playing():
+				MusicManager.play_menu()
 			
 		Globals.State.BATTLE:
+			#_save_begin_battle_state()
 			$BattleAutomator.begin(get_all_units())
+			MusicManager.play_battle()
 			
 		Globals.State.RESULTS:
 			$BattleAutomator.end()
 			_process_results()
-			
-func _process(delta):
-	pass
+			MusicManager.play_menu()
+						
+func _save_begin_battle_state():
+	var data = []
+	for unit in $Player.get_units():
+		var grid_pos = Grid.get_unit_pos(unit)
+		var card_id = unit._cached_data.id
+		data.append({ "pos" : grid_pos, "card" : card_id })
+	PlayerData.save_begin_battle_state(data)
+	
+func _load_begin_battle_state():
+	var data = PlayerData.load_begin_battle_state()
+	for info in data:
+		$Player/CanvasLayer/PlayerHand.deploy(info["pos"], info["card"])
 	
 func _on_ToBattle_pressed():
 	if $GUI/Widget_ToBattle.visible:
@@ -84,7 +101,7 @@ func _on_Unit_on_picked(unit):
 	$AreaHighlights._draw_deploy = true
 	$AreaHighlights.update()
 	
-func _on_Card_on_card_picked(card_data):
+func _on_Card_on_card_picked(card_data, card):
 	$DrawGrid.set_visible(false)
 	$AreaHighlights.animate_deploy = true
 	$AreaHighlights._draw_deploy = true
@@ -124,6 +141,10 @@ func _on_Widget_Popup_pressed():
 			else:
 				get_tree().reload_current_scene()
 	
+func _on_Retry_pressed():
+	MusicManager.play_menu()
+	get_tree().reload_current_scene()
+
 """ PUBLIC """
 
 func get_card_database():
@@ -139,3 +160,10 @@ func get_state():
 	
 func get_all_units():
 	return $Player.get_units() + $Opponent.get_units()
+
+
+func _on_Retry_mouse_entered():
+	$GUI/Retry.modulate = Globals.palette_blood
+
+func _on_Retry_mouse_exited():
+	$GUI/Retry.modulate = Globals.palette_player

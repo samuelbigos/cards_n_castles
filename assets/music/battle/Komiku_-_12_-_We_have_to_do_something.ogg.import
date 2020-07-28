@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/Komiku_-_12_-_We_have_to_do_something.ogg-ffea96e0df416d97b0bb32478fc1152f.oggstr"
+
+[deps]
+
+source_file="res://assets/music/battle/Komiku_-_12_-_We_have_to_do_something.ogg"
+dest_files=[ "res://.import/Komiku_-_12_-_We_have_to_do_something.ogg-ffea96e0df416d97b0bb32478fc1152f.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

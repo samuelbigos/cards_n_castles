@@ -1,9 +1,11 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://source/screen_home/Home.gd" type="Script" id=1]
 [ext_resource path="res://gui/font/SmallFont.tres" type="DynamicFont" id=2]
 [ext_resource path="res://source/effects/CRTEffect.tscn" type="PackedScene" id=3]
 [ext_resource path="res://gui/font/PixelFont.tres" type="DynamicFont" id=4]
+[ext_resource path="res://assets/gui/music.png" type="Texture" id=5]
+[ext_resource path="res://assets/gui/no_music.png" type="Texture" id=6]
 
 [node name="Home" type="Node2D"]
 script = ExtResource( 1 )
@@ -12,8 +14,8 @@ map_scene_path = "res://source/screen_map/Map.tscn"
 [node name="GUI" type="CanvasLayer" parent="."]
 
 [node name="CenterContainer" type="CenterContainer" parent="GUI"]
-anchor_right = 1.0
-anchor_bottom = 1.0
+margin_right = 320.0
+margin_bottom = 240.0
 mouse_filter = 2
 __meta__ = {
 "_edit_use_anchors_": false
@@ -21,14 +23,19 @@ __meta__ = {
 
 [node name="VBoxContainer" type="VBoxContainer" parent="GUI/CenterContainer"]
 margin_left = 20.0
-margin_top = 36.0
+margin_top = 34.0
 margin_right = 300.0
-margin_bottom = 204.0
+margin_bottom = 205.0
 mouse_filter = 2
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Title" type="Label" parent="GUI/CenterContainer/VBoxContainer"]
 margin_right = 280.0
-margin_bottom = 14.0
+margin_bottom = 30.0
+rect_min_size = Vector2( 0, 30 )
 custom_fonts/font = ExtResource( 4 )
 text = "Cards'n'Castles"
 align = 1
@@ -36,21 +43,65 @@ valign = 1
 autowrap = true
 
 [node name="Text" type="Label" parent="GUI/CenterContainer/VBoxContainer"]
-margin_top = 18.0
+margin_top = 33.0
 margin_right = 280.0
-margin_bottom = 168.0
-rect_min_size = Vector2( 280, 150 )
+margin_bottom = 153.0
+rect_min_size = Vector2( 280, 120 )
 custom_fonts/font = ExtResource( 2 )
 text = "Cards'n'Castles is an autobatting strategy card game made for My First Game Jam 2020.
 
 When you enter a battle, you'll see an enemy force and some cards on the bottom of the screen. Drag these cards opposite the enemy force to deploy your army. Hit 'To Battle!' to see the battle play out. If you lose, try positioning your units differently to get better engagements. Winning battles will earn you new cards.
 
-To win the game, be victorious in every battle and win the war!
-
-
-Click to begin..."
+To win the game, be victorious in every battle and win the war!"
 align = 1
 valign = 1
 autowrap = true
 
+[node name="Continue" type="Button" parent="GUI/CenterContainer/VBoxContainer"]
+visible = false
+margin_top = 158.0
+margin_right = 280.0
+margin_bottom = 171.0
+focus_mode = 0
+custom_fonts/font = ExtResource( 2 )
+custom_colors/font_color_hover = Color( 0.505882, 0.164706, 0.0509804, 1 )
+enabled_focus_mode = 0
+text = "[ Continue ]"
+flat = true
+
+[node name="NewGame" type="Button" parent="GUI/CenterContainer/VBoxContainer"]
+margin_top = 158.0
+margin_right = 280.0
+margin_bottom = 171.0
+focus_mode = 0
+custom_fonts/font = ExtResource( 2 )
+custom_colors/font_color_hover = Color( 0.505882, 0.164706, 0.0509804, 1 )
+enabled_focus_mode = 0
+text = "[ New Game ]"
+flat = true
+
+[node name="Button" type="Button" parent="GUI"]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = -38.0
+margin_right = 44.0
+focus_mode = 0
+enabled_focus_mode = 0
+icon = ExtResource( 5 )
+flat = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sprite" type="Sprite" parent="GUI/Button"]
+visible = false
+position = Vector2( 16.9837, 17.2305 )
+texture = ExtResource( 6 )
+
 [node name="CRTEffect" parent="." instance=ExtResource( 3 )]
+[connection signal="pressed" from="GUI/CenterContainer/VBoxContainer/Continue" to="." method="_on_Continue_pressed"]
+[connection signal="pressed" from="GUI/CenterContainer/VBoxContainer/NewGame" to="." method="_on_NewGame_pressed"]
+[connection signal="mouse_entered" from="GUI/Button" to="." method="_on_Button_mouse_entered"]
+[connection signal="mouse_exited" from="GUI/Button" to="." method="_on_Button_mouse_exited"]
+[connection signal="pressed" from="GUI/Button" to="." method="_on_Button_pressed"]

@@ -41,6 +41,9 @@ func _ready():
 		
 	var story_text = Levels.levels[reward_level]["post-text"]
 	$GUI/CenterContainer/VBoxContainer/StoryText.text = '"' + story_text + '"'
+	
+	if not MusicManager.is_playing():
+		MusicManager.play_menu()
 
 func _on_Card_on_card_unpicked(card_data, card):
 	PlayerData.add_card_to_deck(card_data)

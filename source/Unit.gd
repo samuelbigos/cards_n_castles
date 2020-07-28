@@ -28,6 +28,7 @@ signal on_movement_complete
 signal on_death(unit)
 signal on_picked(unit)
 signal on_unpicked(unit)
+signal on_unit_to_card(unit, card_data)
 
 var _id = ""
 var _game = null
@@ -67,6 +68,11 @@ func _process(delta):
 		if Input.is_action_just_released("ui_select"):
 			_sticky = false
 			emit_signal("on_unpicked", self)
+			
+		# convert back to card if moved out of deploy zone.
+		if not Globals.is_over_deploy_zone(get_global_mouse_position()):
+			emit_signal("on_unit_to_card", self,  _cached_data)
+			queue_free()
 			
 	if _snap_lerp_timer > 0.0:
 		position = _lerp(_snap_lerp_from, _snap_lerp_to, _snap_lerp_timer / _total_snap_time)

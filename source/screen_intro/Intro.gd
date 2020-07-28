@@ -24,6 +24,10 @@ func _ready():
 	var level = PlayerData.get_current_level()
 	var story_text = Levels.levels[level]["pre-text"]
 	$GUI/CenterContainer/VBoxContainer/StoryText.text = '"' + story_text + '"'
+	
+	if not MusicManager.is_playing():
+		MusicManager.play_menu()
+		
 
 func _input(event):
 	if event.is_action_pressed("ui_select"):

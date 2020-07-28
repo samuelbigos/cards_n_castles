@@ -46,18 +46,30 @@ func _on_Unit_on_death(unit):
 	if non_wall_units == 0:
 		emit_signal("on_all_units_dead")
 	
-func _spawn_unit(pos, card_data):
+func _spawn_unit(pos, card_data, dragged = true):
 	var unit = _game.unit_scene.instance()
 	unit.init_with_data(card_data, PLAYER_TEAM_ID, _game)
-	unit.set_being_dragged(Grid.pos_to_grid_pos(pos))
+	if dragged:
+		unit.set_being_dragged(Grid.pos_to_grid_pos(pos))
 	unit.connect("on_death", self, "_on_Unit_on_death")
 	add_child(unit)
 	_units.append(unit)
+	return unit
 	
 func _on_Card_on_card_unpicked(card_data, card):
 	if Globals.is_over_deploy_zone(get_global_mouse_position()):
-		_spawn_unit(get_global_mouse_position(), card_data)
+		var unit = _spawn_unit(get_global_mouse_position(), card_data)
+		unit.connect("on_unit_to_card", $CanvasLayer/PlayerHand, "_on_Unit_on_unit_to_card")
+		unit.connect("on_unit_to_card", self, "_on_Unit_on_unit_to_card")
 		card.queue_free()
+		
+func _on_Card_on_card_force_deploy(card_data, card, pos):
+	if Globals.is_over_deploy_zone(pos):
+		var unit = _spawn_unit(pos, card_data, false)
+		card.queue_free()
+	
+func _on_Unit_on_unit_to_card(unit, card_data):
+	_units.erase(unit)
 	
 """ PUBLIC """
 

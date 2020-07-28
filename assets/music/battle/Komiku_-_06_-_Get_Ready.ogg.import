@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/Komiku_-_06_-_Get_Ready.ogg-1cb8a007683c56bf1cbd3d049424210f.oggstr"
+
+[deps]
+
+source_file="res://assets/music/battle/Komiku_-_06_-_Get_Ready.ogg"
+dest_files=[ "res://.import/Komiku_-_06_-_Get_Ready.ogg-1cb8a007683c56bf1cbd3d049424210f.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

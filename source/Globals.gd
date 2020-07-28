@@ -54,6 +54,9 @@ var palette_grid = Color("d1d1d1")
 
 var rng = RandomNumberGenerator.new()
 
+func _init():
+	rng.randomize()
+
 # utils
 func is_over_deploy_zone(pos):
 	var rect_pos = Globals.DEPLOY_AREA_POS * (Grid.CELL_SIZE + Vector2(Grid.CELL_PADDING, Grid.CELL_PADDING))

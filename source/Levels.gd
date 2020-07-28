@@ -13,7 +13,7 @@ const levels = [
 						[ null, 		null, 		null, 		null, 		null, 		null, 		null ],
 						[ null, 		null, 		null, 		null, 		null, 		null, 		null ]],
 		"post-text": "Great work, we'll capture one of them and force them to fight for us! We'll need to bolster our numbers if we're to emerge victorious in the battles to come.",
-		"reward": [ "maa", "archer" ]
+		"reward": [ "archer" ]
 	},
 	
 	#1
@@ -39,7 +39,7 @@ const levels = [
 						[ null, 		null, 		null, 		null, 		null, 		null, 		null ],
 						[ null, 		null, 		null, 		null, 		null, 		null, 		null ],
 						[ null, 		null, 		null, 		null, 		null, 		null, 		null ]],
-		"post-text": "Commander, our tacticians have discovered that units can be deployed even after the battle has started! You could use this tactic to more precisely time when units engage the enemy.",
+		"post-text": "We'll have to think carefully about which unit type to recruit, as we won't be able to change our minds later.",
 		"reward": [ "spearman", "archer", "cavalry" ]
 	},
 	#3

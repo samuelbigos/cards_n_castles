@@ -129,6 +129,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://source/projectiles/ProjectileSwordSwing.gd"
 }, {
+"base": "Resource",
+"class": "SaveGame",
+"language": "GDScript",
+"path": "res://source/SaveGame.gd"
+}, {
 "base": "Node2D",
 "class": "Unit",
 "language": "GDScript",
@@ -169,6 +174,7 @@ _global_script_class_icons={
 "ProjectileArrow": "",
 "ProjectileMango": "",
 "ProjectileSwordSwing": "",
+"SaveGame": "",
 "Unit": "",
 "Widget_Popup": "",
 "XXX": ""
@@ -178,6 +184,7 @@ _global_script_class_icons={
 
 config/name="Cards'n'Castles"
 run/main_scene="res://source/screen_home/Home.tscn"
+config/save_version=0
 
 [autoload]
 
@@ -185,6 +192,8 @@ Grid="*res://source/Grid.gd"
 PlayerData="*res://source/PlayerData.gd"
 Globals="*res://source/Globals.gd"
 DatabaseCards="*res://data/DatabaseCards.tscn"
+SaveManager="*res://source/SaveManager.tscn"
+MusicManager="*res://source/MusicManager.tscn"
 
 [display]
 
