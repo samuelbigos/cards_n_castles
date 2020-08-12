@@ -184,6 +184,7 @@ _global_script_class_icons={
 
 config/name="Cards'n'Castles"
 run/main_scene="res://source/screen_home/Home.tscn"
+config/icon="res://icon.png"
 config/save_version=0
 
 [autoload]
