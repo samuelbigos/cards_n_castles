@@ -43,9 +43,9 @@ valign = 1
 autowrap = true
 
 [node name="Text" type="Label" parent="GUI/CenterContainer/VBoxContainer"]
-margin_top = 33.0
+margin_top = 34.0
 margin_right = 280.0
-margin_bottom = 153.0
+margin_bottom = 154.0
 rect_min_size = Vector2( 280, 120 )
 custom_fonts/font = ExtResource( 2 )
 text = "Cards'n'Castles is an autobatting strategy card game made for My First Game Jam 2020.

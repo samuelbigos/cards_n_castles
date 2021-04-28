@@ -30,7 +30,7 @@ func _ready():
 func _process(delta):	
 	# update positions
 	for i in range(_cards.size() - 1, -1, -1):
-		if not _cards[i]:
+		if not is_instance_valid(_cards[i]):
 			_cards.remove(i)
 			continue
 		var total_cards_width = _cards[i].get_width() * _cards.size() * 0.6
